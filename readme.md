@@ -1,22 +1,86 @@
-# Getting Started
+# Incident Monitoring Dashboard
 
-Welcome to your new CAP project.
+## Overview
 
-It contains these folders and files, following our recommended project layout:
+The Incident Monitoring Dashboard is an enterprise application built using:
 
-File or Folder | Purpose
----------|----------
-`app/` | content for UI frontends goes here
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
-`readme.md` | this getting started guide
+* SAP CAP (Node.js)
+* SAP HANA Cloud
+* SAPUI5 Freestyle
+* OData V4
 
-## Next Steps
+The application enables support teams to monitor, manage, prioritize, and resolve incidents across multiple enterprise systems.
 
-- Open a new terminal and run `cds watch`
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start with your domain model, in a CDS file in `db/`
+---
 
-## Learn More
+## Project Structure
 
-Learn more at <https://cap.cloud.sap>.
+```text
+app/        SAPUI5 Application
+db/         CDS Data Model
+srv/        CAP Services and Business Logic
+docs/       Design Documents and Diagrams
+```
+
+---
+
+## Documentation
+
+For detailed project documentation, refer to:
+
+* [Requirement Understanding & Solution Design](./docs/understanding.md)
+
+---
+
+## Architecture Diagram
+
+![Architecture Diagram](./docs/architecture-diagram.png)
+
+---
+
+## Entity Relationship Diagram
+
+![ERD Diagram](./docs/erd-diagram.png)
+
+---
+
+## Features
+
+### Employee
+
+* Create Incident
+* View Own Incidents
+* Add Comments
+* Track Incident Status
+
+### Admin
+
+* View All Incidents
+* Assign Support Teams
+* Configure SLA
+* Dashboard & Reporting
+* Manage Systems
+
+---
+
+## Business Rules
+
+* Dynamic Priority Calculation
+* Duplicate Incident Detection
+* Alert Noise Suppression
+* Business Hour SLA Tracking
+
+---
+
+## Technology Stack
+
+* SAP CAP Node.js
+* SAP HANA Cloud
+* SAPUI5 Freestyle
+* OData V4
+
+---
+
+## Status
+
+Design Phase
