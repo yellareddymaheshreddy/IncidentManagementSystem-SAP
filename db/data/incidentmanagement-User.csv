@@ -1,0 +1,6 @@
+ID,name,email,role,supportTeam_ID
+USR001,Mahesh,mahesh@company.com,User,TEAM002
+USR002,Ravi,ravi@company.com,User,TEAM002
+USR003,Priya,priya@company.com,Admin,
+USR004,Kiran,kiran@company.com,User,TEAM001
+USR005,Suresh,suresh@company.com,User,TEAM003

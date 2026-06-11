@@ -1,0 +1,4 @@
+ID,comment,incident_ID,user_ID
+COM001,Investigating the issue,INC001,USR002
+COM002,Root cause identified,INC001,USR002
+COM003,Awaiting business confirmation,INC003,USR005

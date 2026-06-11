@@ -1,0 +1,4 @@
+ID,name,description,owner_ID
+SYS001,SAP S4HANA,ERP Core System,USR001
+SYS002,SAP CPI,Integration Platform,USR003
+SYS003,SuccessFactors,HR Management System,USR005

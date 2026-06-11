@@ -1,0 +1,4 @@
+ID,name,description,manager_ID
+TEAM001,Basis Team,SAP Basis Administration,USR002
+TEAM002,CPI Team,SAP CPI Integration Support,USR004
+TEAM003,SuccessFactors Team,HR Application Support,USR004

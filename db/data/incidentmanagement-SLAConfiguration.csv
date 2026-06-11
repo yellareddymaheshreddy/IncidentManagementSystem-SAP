@@ -1,0 +1,6 @@
+ID,priority,description,responseTime,resolutionTime,businessHoursOnly
+SLA001,P1,Critical SLA,1,4,true
+SLA002,P2,High Priority SLA,2,8,true
+SLA003,P3,Medium Priority SLA,4,24,true
+SLA004,P4,Low Priority SLA,8,48,true
+SLA005,P5,Low SLA,24,72,true

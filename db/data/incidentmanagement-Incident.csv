@@ -1,0 +1,7 @@
+ID,title,description,status,severity,priority,businessImpact,affectedUsers,customerImpact,resolvedAt,system_ID,reportedBy_ID,assignedTo_ID,supportTeam_ID,sla_ID,masterIncident_ID,isDuplicate,alertSent
+
+INC001,CPI Interface Failure,Orders not syncing,Open,Critical,P1,Order Processing Impacted,500,true,,SYS002,USR001,USR002,TEAM002,SLA001,,false,true
+
+INC002,S4 Login Issue,Users unable to login,Assigned,High,P2,Employee Productivity Impacted,120,false,,SYS001,USR001,USR004,TEAM001,SLA002,,false,false
+
+INC003,SuccessFactors Report Error,Report generation failed,InProgress,Medium,P3,Reporting Delay,50,false,,SYS003,USR001,USR005,TEAM003,SLA003,,false,false
