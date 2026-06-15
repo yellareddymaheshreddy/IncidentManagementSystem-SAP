@@ -7,4 +7,5 @@ service AdminService {
     entity Systems as projection on db.System;
     entity SLAConfigurations as projection on db.SLAConfiguration;
     entity SupportTeams as projection on db.SupportTeam;
+    entity Users as projection on db.User;
 }

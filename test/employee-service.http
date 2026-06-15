@@ -1,0 +1,21 @@
+@server = http://localhost:4004
+
+### Create an incident
+
+POST {{server}}/odata/v4/employee/Incidents
+Content-Type: application/json
+
+{
+    "title": "System Crash dublicate",
+    "description": "The system crashes when I try to save a record.",
+    "severity": "Critical",
+    "system_ID": "SYS004",
+    "businessImpact": "crashed",
+    "affectedUsers": 9900,
+    "customerImpact": true
+}
+
+
+### Delete incident by id
+DELETE {{server}}/odata/v4/employee/Incidents(d2da4490-32f1-4a30-bb03-881490b9c5c8)
+ 

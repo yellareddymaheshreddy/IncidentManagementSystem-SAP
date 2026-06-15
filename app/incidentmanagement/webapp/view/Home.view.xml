@@ -1,0 +1,61 @@
+<mvc:View
+    controllerName="com.amista.incidentmanagement.incidentmanagement.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page title="Employee Incidents">
+
+        <headerContent>
+            <Button
+                text="Create Incident"
+                icon="sap-icon://add"
+                press=".onCreateIncident"/>
+        </headerContent>
+
+        <content>
+
+            <Table
+                id="incidentTable"
+                items="{/Incidents}"
+                mode="SingleSelectMaster"
+                itemPress=".onIncidentPress">
+
+                <columns>
+
+                    <Column>
+                        <Text text="Title"/>
+                    </Column>
+
+                    <Column>
+                        <Text text="Status"/>
+                    </Column>
+
+                    <Column>
+                        <Text text="Priority"/>
+                    </Column>
+
+                </columns>
+
+                <items>
+
+                    <ColumnListItem type="Navigation">
+
+                        <cells>
+
+                            <Text text="{title}"/>
+                            <ObjectStatus text="{status}"/>
+                            <ObjectStatus text="{priority}"/>
+
+                        </cells>
+
+                    </ColumnListItem>
+
+                </items>
+
+            </Table>
+
+        </content>
+
+    </Page>
+
+</mvc:View>

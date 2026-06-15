@@ -66,8 +66,8 @@ entity System : cuid, managed {
 
 }
 
-entity SLAConfiguration : cuid, managed {
-    priority          : Priority;
+entity SLAConfiguration : managed {
+    key priority      : Priority;
     description       : String(1000);
     responseTime      : Integer; // in Hours
     resolutionTime    : Integer; // in Hours
@@ -80,23 +80,26 @@ entity SLAConfiguration : cuid, managed {
 entity Incident : cuid, managed {
     title            : String(255);
     description      : String(1000);
-    status           : IncidentStatus;
+    status           : IncidentStatus default 'New';
     severity         : Severity;
     priority         : Priority;
     businessImpact   : String(255);
     affectedUsers    : Integer;
     customerImpact   : Boolean;
+    isDuplicate      : Boolean default false;
+    alertSent        : Boolean default false;
+
+    resolutionDueAt  : Timestamp;
+    responseDueAt    : Timestamp;
     resolvedAt       : Timestamp;
+    respondedAt      : Timestamp;
 
     system           : Association to System;
     reportedBy       : Association to User;
     assignedTo       : Association to User;
     supportTeam      : Association to SupportTeam;
     sla              : Association to SLAConfiguration;
-
     masterIncident   : Association to Incident;
-    isDuplicate      : Boolean;
-    alertSent        : Boolean;
 
     comments         : Composition of many IncidentComments
                            on comments.incident = $self;
