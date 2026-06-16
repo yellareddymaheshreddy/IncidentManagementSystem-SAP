@@ -31,3 +31,21 @@ http://localhost:4004/incidentmanagement/webapp/index.html
 1. Active NodeJS LTS (Long Term Support) version and associated supported NPM version.  (See https://nodejs.org)
 
 
+ToolPage
+│
+├── Dashboard
+│
+├── Incidents
+│   ├── List
+│   ├── Create
+│   └── Details
+│
+├── Alerts
+│
+├── Reports
+│
+└── Administration
+    ├── Users
+    ├── Systems
+    ├── Support Teams
+    └── SLA Configurations

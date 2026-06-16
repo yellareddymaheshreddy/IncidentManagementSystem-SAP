@@ -1,0 +1,285 @@
+<mvc:View xmlns:cards="sap.f.cards"
+    controllerName="com.amista.incidentmanagement.incidentmanagement.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout">
+
+    <Page title="Incident Monitoring Dashboard">
+
+        <content>
+
+            <VBox class="sapUiMediumMargin">
+
+                <!-- Header -->
+
+                <Title
+                    text="Operations Overview"
+                    level="H1"/>
+
+                <Text
+                    text="Monitor incidents, alerts, SLA compliance and operational trends."/>
+
+                <Toolbar class="sapUiSmallMarginTop">
+                    <ToolbarSpacer/>
+                    <Button
+                        text="Refresh"
+                        icon="sap-icon://refresh"
+                        press=".onRefresh"/>
+                </Toolbar>
+
+                <!-- KPI Cards -->
+
+                <layout:Grid
+                    defaultSpan="XL3 L3 M6 S12"
+                    class="sapUiMediumMarginTop">
+
+                    <f:Card width="100%">
+                        <f:header>
+                            <cards:Header
+                                title="Total Incidents"/>
+                        </f:header>
+
+                        <f:content>
+                            <VBox
+                                alignItems="Center"
+                                class="sapUiMediumMargin">
+
+                                <ObjectNumber
+                                    number="{dashboard>/totalIncidents}"
+                                    emphasized="true"/>
+
+                            </VBox>
+                        </f:content>
+                    </f:Card>
+
+                    <f:Card width="100%">
+                        <f:header>
+                            <cards:Header
+                                title="Open Incidents"/>
+                        </f:header>
+
+                        <f:content>
+                            <VBox
+                                alignItems="Center"
+                                class="sapUiMediumMargin">
+
+                                <ObjectNumber
+                                    number="{dashboard>/openIncidents}"
+                                    state="Warning"/>
+
+                            </VBox>
+                        </f:content>
+                    </f:Card>
+
+                    <f:Card width="100%">
+                        <f:header>
+                            <cards:Header
+                                title="Critical Incidents"/>
+                        </f:header>
+
+                        <f:content>
+                            <VBox
+                                alignItems="Center"
+                                class="sapUiMediumMargin">
+
+                                <ObjectNumber
+                                    number="{dashboard>/criticalIncidents}"
+                                    state="Error"/>
+
+                            </VBox>
+                        </f:content>
+                    </f:Card>
+
+                    <f:Card width="100%">
+                        <f:header>
+                            <cards:Header
+                                title="SLA Breaches"/>
+                        </f:header>
+
+                        <f:content>
+                            <VBox
+                                alignItems="Center"
+                                class="sapUiMediumMargin">
+
+                                <ObjectNumber
+                                    number="{dashboard>/slaBreaches}"
+                                    state="Error"/>
+
+                            </VBox>
+                        </f:content>
+                    </f:Card>
+
+                </layout:Grid>
+
+                <!-- Incident Trend -->
+
+                <f:Card class="sapUiMediumMarginTop">
+
+                    <f:header>
+                        <cards:Header
+                            title="Incident Trend"/>
+                    </f:header>
+
+                    <f:content>
+
+                        <Table
+                            items="{trend>/value}">
+
+                            <columns>
+
+                                <Column>
+                                    <Text text="Date"/>
+                                </Column>
+
+                                <Column>
+                                    <Text text="Incident Count"/>
+                                </Column>
+
+                            </columns>
+
+                            <items>
+
+                                <ColumnListItem>
+
+                                    <cells>
+
+                                        <Text text="{trend>DATE}"/>
+
+                                        <ObjectNumber
+                                            number="{trend>INCIDENTCOUNT}"/>
+
+                                    </cells>
+
+                                </ColumnListItem>
+
+                            </items>
+
+                        </Table>
+
+                    </f:content>
+
+                </f:Card>
+
+                <!-- SLA Breach Summary -->
+
+                <f:Card class="sapUiMediumMarginTop">
+
+                    <f:header>
+                        <cards:Header
+                            title="SLA Breach Summary"/>
+                    </f:header>
+
+                    <f:content>
+
+                        <Table
+                            items="{sla>/value}">
+
+                            <columns>
+
+                                <Column>
+                                    <Text text="Priority"/>
+                                </Column>
+
+                                <Column>
+                                    <Text text="Breach Count"/>
+                                </Column>
+
+                            </columns>
+
+                            <items>
+
+                                <ColumnListItem>
+
+                                    <cells>
+
+                                        <Text text="{sla>PRIORITY}"/>
+
+                                        <ObjectNumber
+                                            number="{sla>BREACHCOUNT}"
+                                            state="Error"/>
+
+                                    </cells>
+
+                                </ColumnListItem>
+
+                            </items>
+
+                        </Table>
+
+                    </f:content>
+
+                </f:Card>
+
+                <!-- Active Alerts -->
+
+                <f:Card class="sapUiMediumMarginTop">
+
+                    <f:header>
+                        <cards:Header
+                            title="Pending Alerts"/>
+                    </f:header>
+
+                    <f:content>
+
+                        <Table
+                            items="{alerts>/value}">
+
+                            <columns>
+
+                                <Column>
+                                    <Text text="Title"/>
+                                </Column>
+
+                                <Column>
+                                    <Text text="Priority"/>
+                                </Column>
+
+                                <Column>
+                                    <Text text="Severity"/>
+                                </Column>
+
+                                <Column>
+                                    <Text text="Age (Minutes)"/>
+                                </Column>
+
+                            </columns>
+
+                            <items>
+
+                                <ColumnListItem>
+
+                                    <cells>
+
+                                        <Text text="{alerts>title}"/>
+
+                                        <ObjectStatus
+                                            text="{alerts>priority}"
+                                            state="Error"/>
+
+                                        <ObjectStatus
+                                            text="{alerts>severity}"
+                                            state="Error"/>
+
+                                        <ObjectNumber
+                                            number="{alerts>ageMinutes}"/>
+
+                                    </cells>
+
+                                </ColumnListItem>
+
+                            </items>
+
+                        </Table>
+
+                    </f:content>
+
+                </f:Card>
+
+            </VBox>
+
+        </content>
+
+    </Page>
+
+</mvc:View>

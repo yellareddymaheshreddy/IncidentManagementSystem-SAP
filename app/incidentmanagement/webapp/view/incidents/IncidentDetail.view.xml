@@ -1,0 +1,33 @@
+<mvc:View
+    controllerName="com.amista.incidentmanagement.incidentmanagement.controller.IncidentDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page title="Incident Details">
+
+        <content>
+
+            <ObjectHeader
+                title="{title}"
+                number="{priority}"
+                numberUnit="Priority"/>
+
+            <VBox class="sapUiMediumMargin">
+
+                <Text text="{description}"/>
+
+                <ObjectStatus
+                    title="Status"
+                    text="{status}"/>
+
+                <ObjectStatus
+                    title="Severity"
+                    text="{severity}"/>
+
+            </VBox>
+
+        </content>
+
+    </Page>
+
+</mvc:View>

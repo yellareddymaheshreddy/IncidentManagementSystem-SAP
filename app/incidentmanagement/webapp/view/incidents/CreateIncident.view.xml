@@ -1,0 +1,68 @@
+<mvc:View
+    controllerName="com.amista.incidentmanagement.incidentmanagement.controller.CreateIncident"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form">
+
+    <Page title="Create Incident">
+
+        <content>
+
+            <f:SimpleForm editable="true">
+
+                <Label text="Title"/>
+                <Input id="titleInput"/>
+
+                <Label text="Description"/>
+                <TextArea id="descriptionInput"/>
+
+                <Label text="Severity"/>
+                <Select id="severitySelect">
+
+                    <items>
+                        <core:Item
+                            xmlns:core="sap.ui.core"
+                            key="Low"
+                            text="Low"/>
+
+                        <core:Item
+                            xmlns:core="sap.ui.core"
+                            key="Medium"
+                            text="Medium"/>
+
+                        <core:Item
+                            xmlns:core="sap.ui.core"
+                            key="High"
+                            text="High"/>
+
+                        <core:Item
+                            xmlns:core="sap.ui.core"
+                            key="Critical"
+                            text="Critical"/>
+
+                    </items>
+
+                </Select>
+
+            </f:SimpleForm>
+
+        </content>
+
+        <footer>
+
+            <Toolbar>
+
+                <ToolbarSpacer/>
+
+                <Button
+                    text="Create"
+                    type="Emphasized"
+                    press=".onSave"/>
+
+            </Toolbar>
+
+        </footer>
+
+    </Page>
+
+</mvc:View>

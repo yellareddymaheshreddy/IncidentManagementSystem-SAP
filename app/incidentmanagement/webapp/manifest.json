@@ -23,6 +23,13 @@
           "annotations": [],
           "odataVersion": "4.0"
         }
+      },
+      "dashboardService": {
+        "uri": "/odata/v4/dashboard/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
       }
     },
     "crossNavigation": {
@@ -84,6 +91,10 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
+      },
+      "dashboardService": {
+        "dataSource": "dashboardService",
+        "preload": true
       }
     },
     "resources": {
@@ -112,12 +123,39 @@
           "target": [
             "TargetHome"
           ]
+        },
+        {
+          "name": "CreateIncident",
+          "pattern": "createIncident",
+          "target": "CreateIncident"
+        },
+        {
+          "name": "IncidentDetail",
+          "pattern": "incident/{incidentId}",
+          "target": "IncidentDetail"
+        },
+        {
+          "name": "Dashboard",
+          "pattern": "dashboard",
+          "target": "Dashboard"
         }
       ],
       "targets": {
         "TargetHome": {
           "id": "Home",
           "name": "Home"
+        },
+        "CreateIncident": {
+          "id": "CreateIncident",
+          "name": "incidents.CreateIncident"
+        },
+        "IncidentDetail": {
+          "id": "IncidentDetail",
+          "name": "incidents.IncidentDetail"
+        },
+        "Dashboard": {
+          "id": "Dashboard",
+          "name": "Dashboard"
         }
       }
     },
