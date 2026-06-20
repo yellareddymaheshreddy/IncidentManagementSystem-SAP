@@ -12,7 +12,6 @@ sap.ui.define([
             },
 
             onCreateIncident: function () {
-                console.log("Create Incident button pressed");
                 const oRouter = this.getOwnerComponent().getRouter();
 
                 oRouter.navTo("CreateIncident");
@@ -29,6 +28,7 @@ sap.ui.define([
 
                 const sIncidentId =
                     oContext.getProperty("ID");
+                    console.log("Incident ID: " + sIncidentId);
 
                 this.getOwnerComponent()
                     .getRouter()

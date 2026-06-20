@@ -12,15 +12,56 @@ sap.ui.define([
             ]
         },
 
-        init() {
+        async init() {
+
+
             // call the base component's init function
             UIComponent.prototype.init.apply(this, arguments);
+
+            //    await this.loadCurrentUser()
+            this.setModel(
+                new sap.ui.model.json.JSONModel(
+                    {isAdmin: false, userId: "USR002", username: "mahesh", role: "User"}
+                ),
+                "user"
+            );
 
             // set the device model
             this.setModel(models.createDeviceModel(), "device");
 
             // enable routing
             this.getRouter().initialize();
+
+
+        },
+        async loadCurrentUser() {
+
+            const oUserService =
+                this.getModel("adminService");
+
+            const oContext =
+                oUserService.bindContext(
+                    "/whoAmI(...)"
+                );
+
+            await oContext.execute();
+
+            const userData =
+                oContext.getBoundContext()
+                    .getObject();
+
+            console.log(
+                "Current user data:",
+                userData
+            );
+
+            this.setModel(
+                new sap.ui.model.json.JSONModel(
+                    userData
+                ),
+                "user"
+            );
+
         }
     });
 });

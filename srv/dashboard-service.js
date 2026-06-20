@@ -87,7 +87,7 @@ module.exports = (srv) => {
             .where({
                 severity: 'Critical',
                 status: { '!=': 'Resolved' },
-                alertSent: false
+                // alertSent: false TODO
             })
     );
 
@@ -97,9 +97,8 @@ module.exports = (srv) => {
         .filter(i => {
 
             const ageMinutes =
-                (now - new Date(i.createdAt))
-                / (1000 * 60);
-
+            (now - new Date(i.createdAt))
+            / (1000 * 60);
             return ageMinutes >= 15;
         })
         .map(i => ({
@@ -114,6 +113,21 @@ module.exports = (srv) => {
             )
         }));
 
-});
+        
 
+});
+    srv.on('getIncidentStatusSummary', async (req) => {
+        const tx = cds.tx(req);
+        const username = req.headers["x-mock-user"] || (req.user ? req.user.id : "admin");
+        const whereClause = username !== "admin" ? "WHERE reportedBy_ID = 'USR001'" : "";
+
+        return await tx.run(`
+            SELECT
+                status,
+                COUNT(*) AS count
+            FROM incidentmanagement_Incident
+            ${whereClause}
+            GROUP BY status
+        `);
+    });
 };

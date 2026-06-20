@@ -2,6 +2,31 @@
   "xsappname": "IncidentManagement",
   "tenant-mode": "dedicated",
   "description": "Security profile of called application",
-  "scopes": [],
-  "role-templates": []
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Admin Access"
+    },
+    {
+      "name": "$XSAPPNAME.Employee",
+      "description": "Employee Access"
+    }
+  ],
+
+  "role-templates": [
+    {
+      "name": "Admin",
+      "description": "Admin Role",
+      "scope-references": [
+        "$XSAPPNAME.Admin"
+      ]
+    },
+    {
+      "name": "Employee",
+      "description": "Employee Role",
+      "scope-references": [
+        "$XSAPPNAME.Employee"
+      ]
+    }
+  ]
 }

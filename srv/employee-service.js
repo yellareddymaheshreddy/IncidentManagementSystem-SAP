@@ -1,14 +1,21 @@
 const SELECT = require("@sap/cds/lib/ql/SELECT");
-const calculatePriority = require("../utils/priority-calculator");
-const { getDublicateIncident } = require("../utils/dublicate-incident");
-const { calculateSlaDue } = require("../utils/sla-calculator");
+const calculatePriority = require("./utils/priority-calculator.js");
+const { getDublicateIncident } = require("./utils/dublicate-incident.js");
+const { calculateSlaDue } = require("./utils/sla-calculator.js");
 
 
 module.exports = (srv) => {
 
   srv.before("CREATE", "Incidents", async (req) => {
-    console.log(req.user.id ,"user is this")
-    
+    console.log("=== CREATE INCIDENT ===");
+
+    console.log("User:", req.user.id);
+
+    console.log("Data:", req.data);
+    console.log("complete user object:", req.user);
+    // TODO: get user id and only show the incidents created by that user
+    // req.data.reportedBy_ID = req.user.id;
+
     //duplicate check
     const masterIncident = await getDublicateIncident(req.data.system_ID);
     if (masterIncident) {
@@ -39,5 +46,32 @@ module.exports = (srv) => {
     }
 
   });
+
+  srv.before("UPDATE", "Incidents", async (req) => {
+    const { status } = req.data;
+    if (status === "Resolved") {
+      req.data.resolvedAt = new Date().toISOString();
+    } else if (status === "InProgress" || status === "Assigned") {
+      const existing = await cds.tx(req).run(
+        SELECT.one.from("incidentmanagement.Incident")
+          .where({ ID: req.data.ID || req.params[0]?.ID })
+      );
+      if (existing && !existing.respondedAt) {
+        req.data.respondedAt = new Date().toISOString();
+      }
+    }
+  });
+
+  srv.on("whoAmI", req => {
+
+    console.log("User:", req.user.id);
+
+    console.log("Roles:", [...req.user.roles]);
+
+    return {
+        user: req.user.id
+    };
+
+});
 
 };

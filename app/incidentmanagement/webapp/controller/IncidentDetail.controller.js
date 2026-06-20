@@ -26,14 +26,28 @@ sap.ui.define([
                     oEvent.getParameter("arguments")
                         .incidentId;
 
-                const sPath =
-                    "/Incidents(" +
-                    sIncidentId +
-                    ")";
+                const sPath = "/Incidents('" + sIncidentId + "')";
 
                 this.getView().bindElement({
-                    path: sPath
+                    path: sPath,
+                    parameters: {
+                        $expand: [
+                            "reportedBy",
+                            "assignedTo",
+                            "comments($expand=user)",
+                            "alerts",
+                            "masterIncident"
+                        ].join(",")
+                    }
                 });
+
+            },
+
+            onNavBack: function () {
+
+                this.getOwnerComponent()
+                    .getRouter()
+                    .navTo("RouteHome");
 
             }
 

@@ -27,13 +27,37 @@ sap.ui.define([
                         oListBinding.create({
 
                             title:
-                                this.byId("titleInput").getValue(),
+                                this.byId("titleInput")
+                                    .getValue(),
 
                             description:
-                                this.byId("descriptionInput").getValue(),
+                                this.byId("descriptionInput")
+                                    .getValue(),
 
                             severity:
-                                this.byId("severitySelect").getSelectedKey()
+                                this.byId("severitySelect")
+                                    .getSelectedKey(),
+
+                            businessImpact:
+                                this.byId("businessImpactInput")
+                                    .getValue(),
+
+                            affectedUsers:
+                                Number(
+                                    this.byId("affectedUsersInput")
+                                        .getValue()
+                                ),
+
+                            customerImpact:
+                                this.byId("customerImpactSwitch")
+                                    .getState(),
+
+                            system_ID:
+                                this.byId("systemSelect")
+                                    .getSelectedKey(),
+
+                            reportedBy_ID:
+                                this.getOwnerComponent().getModel("user").getProperty("/userId")
 
                         });
 

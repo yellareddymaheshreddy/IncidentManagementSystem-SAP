@@ -1,12 +1,10 @@
 service DashboardService {
+    function getDashboardKPIs()         returns DashboardKPIs;
+    function getIncidentTrend()         returns many IncidentTrend;
+    function getSLABreachSummary()      returns many SLABreachSummary;
+    function getPendingAlerts()         returns many Alerts;
+    function getIncidentStatusSummary() returns many IncidentStatusSummary;
 
-    function getDashboardKPIs() returns DashboardKPIs;
-
-    function getIncidentTrend() returns many IncidentTrend;
-
-    function getSLABreachSummary() returns many SLABreachSummary;
-
-    function getPendingAlerts() returns many Alerts;
 }
 
 type DashboardKPIs {
@@ -32,4 +30,9 @@ type Alerts {
     description : String;
     severity    : String;
     createdAt   : DateTime;
+}
+
+type IncidentStatusSummary {
+    status : String;
+    count  : Integer;
 }

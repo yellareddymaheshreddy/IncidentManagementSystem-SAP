@@ -8,6 +8,7 @@ modules:
   path: gen/srv
   requires:
   - name: IncidentManagement-db
+  - name: incident-xsuaa
   provides:
   - name: srv-api
     properties:
@@ -49,6 +50,12 @@ modules:
     - npm run build:cf
     supported-platforms: []
 resources:
+- name: incident-xsuaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: xsuaa
+    service-plan: application
+    path: xs-security.json
 - name: IncidentManagement-db
   type: com.sap.xs.hdi-container
   parameters:

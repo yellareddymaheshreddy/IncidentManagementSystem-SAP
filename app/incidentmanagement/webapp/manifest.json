@@ -30,6 +30,13 @@
         "settings": {
           "odataVersion": "4.0"
         }
+      },
+      "adminService": {
+        "uri": "/odata/v4/admin/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
       }
     },
     "crossNavigation": {
@@ -69,7 +76,8 @@
       "minUI5Version": "1.149.0",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "sap.tnt": {}
       }
     },
     "contentDensities": {
@@ -94,6 +102,10 @@
       },
       "dashboardService": {
         "dataSource": "dashboardService",
+        "preload": true
+      },
+      "adminService": {
+        "dataSource": "adminService",
         "preload": true
       }
     },
@@ -138,6 +150,11 @@
           "name": "Dashboard",
           "pattern": "dashboard",
           "target": "Dashboard"
+        },
+        {
+          "name": "Alerts",
+          "pattern": "alerts",
+          "target": "Alerts"
         }
       ],
       "targets": {
@@ -156,6 +173,14 @@
         "Dashboard": {
           "id": "Dashboard",
           "name": "Dashboard"
+        },
+        "System": {
+          "id": "System",
+          "name": "admin.System"
+        },
+        "Alerts": {
+          "id": "Alerts",
+          "name": "Alerts"
         }
       }
     },

@@ -2,45 +2,83 @@
     controllerName="com.amista.incidentmanagement.incidentmanagement.controller.CreateIncident"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:f="sap.ui.layout.form">
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
 
     <Page title="Create Incident">
 
         <content>
 
-            <f:SimpleForm editable="true">
+            <f:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout">
+
+                <Title text="Incident Information"/>
 
                 <Label text="Title"/>
-                <Input id="titleInput"/>
+                <Input
+                    id="titleInput"
+                    required="true"/>
 
                 <Label text="Description"/>
-                <TextArea id="descriptionInput"/>
+                <TextArea
+                    id="descriptionInput"
+                    rows="5"
+                    required="true"/>
 
                 <Label text="Severity"/>
-                <Select id="severitySelect">
+                <Select
+                    id="severitySelect"
+                    required="true">
 
                     <items>
+
                         <core:Item
-                            xmlns:core="sap.ui.core"
                             key="Low"
                             text="Low"/>
 
                         <core:Item
-                            xmlns:core="sap.ui.core"
                             key="Medium"
                             text="Medium"/>
 
                         <core:Item
-                            xmlns:core="sap.ui.core"
                             key="High"
                             text="High"/>
 
                         <core:Item
-                            xmlns:core="sap.ui.core"
                             key="Critical"
                             text="Critical"/>
 
                     </items>
+
+                </Select>
+
+                <Label text="Business Impact"/>
+                <Input
+                    id="businessImpactInput"
+                    placeholder="e.g. Order processing unavailable"/>
+
+                <Label text="Affected Users"/>
+                <Input
+                    id="affectedUsersInput"
+                    type="Number"
+                    value="0"/>
+
+                <Label text="Customer Impact"/>
+                <Switch
+                    id="customerImpactSwitch"/>
+
+                <Label text="System"/>
+
+                <Select
+                    id="systemSelect"
+                    items="{
+                        path:'/Systems'
+                    }">
+
+                    <core:Item
+                        key="{ID}"
+                        text="{name}"/>
 
                 </Select>
 
@@ -55,7 +93,11 @@
                 <ToolbarSpacer/>
 
                 <Button
-                    text="Create"
+                    text="Cancel"
+                    press=".onCancel"/>
+
+                <Button
+                    text="Create Incident"
                     type="Emphasized"
                     press=".onSave"/>
 
