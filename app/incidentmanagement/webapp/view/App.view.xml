@@ -63,6 +63,7 @@
                 <ToolbarSpacer width="15px" />
                 <Avatar
                     src="sap-icon://person-placeholder"
+                    press=".onUserProfilePress"
                     displaySize="XS"
                 />
             </tnt:ToolHeader>
@@ -92,19 +93,25 @@
                     <tnt:NavigationListItem
                         text="Systems"
                         icon="sap-icon://settings"
-                        key="SystemManagement"
+                        key="System"
                         visible="{user>/isAdmin}"
                     />
                     <tnt:NavigationListItem
                         text="Support Teams"
                         icon="sap-icon://group"
-                        key="TeamManagement"
+                        key="SupportTeam"
                         visible="{user>/isAdmin}"
                     />
                     <tnt:NavigationListItem
                         text="SLA Configs"
                         icon="sap-icon://wrench"
                         key="SlaConfig"
+                        visible="{user>/isAdmin}"
+                    />
+                    <tnt:NavigationListItem
+                        text="User Management"
+                        icon="sap-icon://wrench"
+                        key="UserManagement"
                         visible="{user>/isAdmin}"
                     />
                 </tnt:NavigationList>

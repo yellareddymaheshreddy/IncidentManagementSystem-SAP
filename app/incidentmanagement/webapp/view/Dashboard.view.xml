@@ -20,13 +20,7 @@
                 <Text
                     text="Monitor incidents, alerts, SLA compliance and operational trends."/>
 
-                <Toolbar class="sapUiSmallMarginTop">
-                    <ToolbarSpacer/>
-                    <Button
-                        text="Refresh"
-                        icon="sap-icon://refresh"
-                        press=".onRefresh"/>
-                </Toolbar>
+                
 
                 <!-- KPI Cards -->
 
@@ -144,10 +138,10 @@
 
                                     <cells>
 
-                                        <Text text="{trend>DATE}"/>
+                                        <Text text="{trend>date}"/>
 
                                         <ObjectNumber
-                                            number="{trend>INCIDENTCOUNT}"/>
+                                            number="{trend>incidentCount}"/>
 
                                     </cells>
 
@@ -193,10 +187,10 @@
 
                                     <cells>
 
-                                        <Text text="{sla>PRIORITY}"/>
+                                        <Text text="{sla>priority}"/>
 
                                         <ObjectNumber
-                                            number="{sla>BREACHCOUNT}"
+                                            number="{sla>breachCount}"
                                             state="Error"/>
 
                                     </cells>

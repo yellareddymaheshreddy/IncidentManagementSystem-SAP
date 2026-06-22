@@ -101,6 +101,8 @@ entity Incident : cuid, managed {
     sla              : Association to SLAConfiguration;
     masterIncident   : Association to Incident;
 
+    dublicates       : Association to many Incident
+                           on dublicates.masterIncident = $self;
     comments         : Composition of many IncidentComments
                            on comments.incident = $self;
     alerts           : Composition of many IncidentAlerts

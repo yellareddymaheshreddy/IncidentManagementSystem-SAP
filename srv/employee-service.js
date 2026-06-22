@@ -6,6 +6,19 @@ const { calculateSlaDue } = require("./utils/sla-calculator.js");
 
 module.exports = (srv) => {
 
+  srv.on("READ", "Incidents", async (req) => {
+    let userId = req.user.id;
+    if(userId === "anonymous") {
+      userId = "df3bb831-2be3-4695-8995-3f9d37f6d30a";
+    }
+
+    return SELECT.from("IncidentManagement.Incident")
+        .where({
+            reportedBy_ID: userId 
+        });
+
+});
+
   srv.before("CREATE", "Incidents", async (req) => {
     console.log("=== CREATE INCIDENT ===");
 
@@ -48,6 +61,10 @@ module.exports = (srv) => {
   });
 
   srv.before("UPDATE", "Incidents", async (req) => {
+    console.log(req.data)
+    if(req.data.assignedTo_ID && !req.data.status) {
+      req.data.status = "Assigned";
+    }
     const { status } = req.data;
     if (status === "Resolved") {
       req.data.resolvedAt = new Date().toISOString();

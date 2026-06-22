@@ -155,12 +155,39 @@
           "name": "Alerts",
           "pattern": "alerts",
           "target": "Alerts"
+        },
+        {
+          "name": "System",
+          "pattern": "system",
+          "target": "System"
+        },
+          {
+            "name": "SlaConfig",
+            "pattern": "slaConfig",
+            "target": "SlaConfig"
+          },
+          {
+            "name": "SupportTeam",
+            "pattern": "supportTeam",
+            "target": "SupportTeam"
+          },
+        {
+          "name":"UserManagement",
+          "pattern":"userManagement",
+          "target":"UserManagement"
+        },
+        {
+          "name": "UserDetail",
+          "pattern": "user/{userId}",
+          "target": [
+            "UserDetail"
+          ]
         }
       ],
       "targets": {
         "TargetHome": {
           "id": "Home",
-          "name": "Home"
+          "name": "incidents.IncidentList"
         },
         "CreateIncident": {
           "id": "CreateIncident",
@@ -181,6 +208,26 @@
         "Alerts": {
           "id": "Alerts",
           "name": "Alerts"
+        },
+        "SlaConfig": {
+          "id": "SlaConfig",
+          "name": "admin.SlaConfig"
+        },
+        "SupportTeam": {
+          "id": "SupportTeam",
+          "name": "admin.SupportTeam"
+        },
+        "UserManagement": {
+          "id": "UserManagement",
+          "name": "admin.UserManagement"
+        },
+        "UserDetail": {
+          "id": "UserDetail",
+          "name": "admin.UserDetail"
+        },
+        "TreeTable": {
+          "id": "TreeTable",
+          "name": "TreeTable"
         }
       }
     },

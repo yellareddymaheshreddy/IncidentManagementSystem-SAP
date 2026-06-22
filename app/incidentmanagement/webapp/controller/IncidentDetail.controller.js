@@ -1,11 +1,12 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
-], function (Controller) {
+    "sap/ui/core/mvc/Controller",
+    "../model/formatter"
+], function (Controller,formatter) {
     "use strict";
 
     return Controller.extend(
         "com.amista.incidentmanagement.incidentmanagement.controller.IncidentDetail",
-        {
+        {   formatter:formatter,
 
             onInit: function () {
 
@@ -21,7 +22,7 @@ sap.ui.define([
             },
 
             _onObjectMatched: function (oEvent) {
-
+                
                 const sIncidentId =
                     oEvent.getParameter("arguments")
                         .incidentId;
@@ -44,10 +45,17 @@ sap.ui.define([
             },
 
             onNavBack: function () {
+                const oHistory = sap.ui.core.routing.History.getInstance();
+                const sPreviousHash = oHistory.getPreviousHash();
 
-                this.getOwnerComponent()
-                    .getRouter()
-                    .navTo("RouteHome");
+                if (sPreviousHash !== undefined) {
+                    window.history.go(-1);
+                } else {
+                    this.getOwnerComponent()
+                        .getRouter()
+                        .navTo("RouteHome");
+                }
+
 
             }
 
@@ -55,3 +63,4 @@ sap.ui.define([
     );
 
 });
+

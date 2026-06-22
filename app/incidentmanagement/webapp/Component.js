@@ -21,7 +21,7 @@ sap.ui.define([
             //    await this.loadCurrentUser()
             this.setModel(
                 new sap.ui.model.json.JSONModel(
-                    {isAdmin: false, userId: "USR002", username: "mahesh", role: "User"}
+                    {isAdmin: false, userId: "df3bb831-2be3-4695-8995-3f9d37f6d30a", username: "mahesh", role: "User" , email:"mahesh@example.com"}
                 ),
                 "user"
             );

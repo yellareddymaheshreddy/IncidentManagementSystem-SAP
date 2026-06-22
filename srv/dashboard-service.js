@@ -85,7 +85,8 @@ module.exports = (srv) => {
     const incidents = await tx.run(
         SELECT.from('incidentmanagement.Incident')
             .where({
-                severity: 'Critical',
+                // severity: 'Critical',
+                priority: 'P2',
                 status: { '!=': 'Resolved' },
                 // alertSent: false TODO
             })
@@ -119,7 +120,7 @@ module.exports = (srv) => {
     srv.on('getIncidentStatusSummary', async (req) => {
         const tx = cds.tx(req);
         const username = req.headers["x-mock-user"] || (req.user ? req.user.id : "admin");
-        const whereClause = username !== "admin" ? "WHERE reportedBy_ID = 'USR001'" : "";
+        const whereClause = username !== "admin" ? "WHERE reportedBy_ID = 'df3bb831-2be3-4695-8995-3f9d37f6d30a'" : "";
 
         return await tx.run(`
             SELECT
@@ -130,4 +131,24 @@ module.exports = (srv) => {
             GROUP BY status
         `);
     });
+
+  srv.on("getIncidentTree", async (req) => {
+
+    const tx = cds.tx(req);
+
+    return await tx.run(
+        SELECT.from("incidentmanagement.Incident")
+            .where({
+                masterIncident_ID: null
+            })
+            .columns(
+                '*',
+                {
+                    ref: ['dublicates'],
+                    expand: ['*']
+                }
+            )
+    );
+
+});
 };

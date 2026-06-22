@@ -55,7 +55,7 @@ sap.ui.define([
                 const sRole = oEvent.getParameter("selectedItem").getKey();
                 const oUserModel = this.getOwnerComponent().getModel("user");
                 const sUsername = sRole === "Admin" ? "Admin" : "mahesh";
-                const sDbUserId = sRole === "Admin" ? "USR003" : "USR001";
+                const sDbUserId = sRole === "Admin" ? "df3bb831-2be3-4695-8995-3f9d37f6d30c" : "df3bb831-2be3-4695-8995-3f9d37f6d30a";
                 const bIsAdmin = sRole === "Admin";
 
                 oUserModel.setProperty("/role", sRole);
@@ -87,6 +87,13 @@ sap.ui.define([
                     console.error("Failed to load alerts count", error);
                 }
             },
+
+            onUserProfilePress: function () {
+            const sUserId = this.getOwnerComponent().getModel("user").getProperty("/userId");
+            this.getOwnerComponent().getRouter().navTo("UserDetail", {
+                userId: sUserId
+            });
+        },
 
 
         });

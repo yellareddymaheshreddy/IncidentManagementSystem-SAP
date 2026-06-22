@@ -1,0 +1,49 @@
+<mvc:View
+    controllerName="com.amista.incidentmanagement.incidentmanagement.controller.UserManagement"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page title="User Management Console">
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Table id="usersTable" items="{adminService>/Users}" mode="SingleSelectMaster" growing="true">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="Registered Users &amp; Employees" level="H2"/>
+                            <ToolbarSpacer/>
+                            <Button text="Add User" type="Default" icon="sap-icon://add" press=".onAddUser"/>
+                            <Button text="Delete Selected" type="Reject" icon="sap-icon://delete" press=".onDeleteUser"/>
+                            <Button text="Assign Incident" type="Default" icon="sap-icon://employee-approvals" press=".onAssignIncident"/>
+                            <Button text="Save Changes" type="Emphasized" icon="sap-icon://save" press=".onSaveChanges"/>
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column width="180px"><Text text="User ID"/></Column>
+                        <Column minScreenWidth="200px"><Text text="Full Name"/></Column>
+                        <Column minScreenWidth="220px"><Text text="Email Address"/></Column>
+                        <Column width="150px"><Text text="System Role"/></Column>
+                        <Column minScreenWidth="200px"><Text text="Support Team"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Navigation" press=".onUserPress">
+                            <cells>
+                                <Label text="{adminService>ID}" design="Bold"/>
+                                <Input value="{adminService>name}"/>
+                                <Input value="{adminService>email}"/>
+                                <Select selectedKey="{adminService>role}">
+                                    <items>
+                                        <core:Item key="User" text="User / Employee"/>
+                                        <core:Item key="Admin" text="Administrator"/>
+                                    </items>
+                                </Select>
+                                <ComboBox selectedKey="{adminService>supportTeam_ID}" items="{adminService>/SupportTeams}">
+                                    <core:Item key="{adminService>ID}" text="{adminService>name}"/>
+                                </ComboBox>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

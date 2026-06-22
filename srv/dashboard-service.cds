@@ -4,6 +4,7 @@ service DashboardService {
     function getSLABreachSummary()      returns many SLABreachSummary;
     function getPendingAlerts()         returns many Alerts;
     function getIncidentStatusSummary() returns many IncidentStatusSummary;
+    function getIncidentTree()       returns many Incident;
 
 }
 
@@ -35,4 +36,14 @@ type Alerts {
 type IncidentStatusSummary {
     status : String;
     count  : Integer;
+}
+
+type Incident{
+    id          : UUID;
+    title       : String;
+    description : String;
+    status      : String;
+    severity    : String;
+    priority    : String;
+    createdAt   : DateTime;
 }
