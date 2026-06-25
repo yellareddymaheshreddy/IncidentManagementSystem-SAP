@@ -80,43 +80,43 @@ module.exports = (srv) => {
 
     srv.on('getPendingAlerts', async (req) => {
 
-    const tx = cds.tx(req);
+        const tx = cds.tx(req);
 
-    const incidents = await tx.run(
-        SELECT.from('incidentmanagement.Incident')
-            .where({
-                // severity: 'Critical',
-                priority: 'P2',
-                status: { '!=': 'Resolved' },
-                // alertSent: false TODO
+        const incidents = await tx.run(
+            SELECT.from('incidentmanagement.Incident')
+                .where({
+                    // severity: 'Critical',
+                    priority: 'P2',
+                    status: { '!=': 'Resolved' },
+                    // alertSent: false TODO
+                })
+        );
+
+        const now = new Date();
+
+        return incidents
+            .filter(i => {
+
+                const ageMinutes =
+                    (now - new Date(i.createdAt))
+                    / (1000 * 60);
+                return ageMinutes >= 15;
             })
-    );
+            .map(i => ({
+                incidentId: i.ID,
+                title: i.title,
+                priority: i.priority,
+                severity: i.severity,
+                createdAt: i.createdAt,
+                ageMinutes: Math.floor(
+                    (now - new Date(i.createdAt))
+                    / (1000 * 60)
+                )
+            }));
 
-    const now = new Date();
 
-    return incidents
-        .filter(i => {
 
-            const ageMinutes =
-            (now - new Date(i.createdAt))
-            / (1000 * 60);
-            return ageMinutes >= 15;
-        })
-        .map(i => ({
-            incidentId: i.ID,
-            title: i.title,
-            priority: i.priority,
-            severity: i.severity,
-            createdAt: i.createdAt,
-            ageMinutes: Math.floor(
-                (now - new Date(i.createdAt))
-                / (1000 * 60)
-            )
-        }));
-
-        
-
-});
+    });
     srv.on('getIncidentStatusSummary', async (req) => {
         const tx = cds.tx(req);
         const username = req.headers["x-mock-user"] || (req.user ? req.user.id : "admin");
@@ -132,23 +132,41 @@ module.exports = (srv) => {
         `);
     });
 
-  srv.on("getIncidentTree", async (req) => {
+    srv.on("getIncidentTree", async (req) => {
+
+        const tx = cds.tx(req);
+
+        return await tx.run(
+            SELECT.from("incidentmanagement.Incident")
+                .where({
+                    masterIncident_ID: null
+                })
+                .columns(
+                    '*',
+                    {
+                        ref: ['dublicates'],
+                        expand: ['*']
+                    }
+                )
+        );
+
+    });
+
+srv.on("getChartData", async (req) => {
+    const Incident = cds.entities["incidentmanagement.Incident"];
 
     const tx = cds.tx(req);
 
     return await tx.run(
-        SELECT.from("incidentmanagement.Incident")
-            .where({
-                masterIncident_ID: null
-            })
+        SELECT.from(Incident)
             .columns(
-                '*',
-                {
-                    ref: ['dublicates'],
-                    expand: ['*']
-                }
+                "status",
+                { func: "count", args: [{ ref: ["ID"] }], as: "count" }
             )
+            .groupBy("status")
     );
-
 });
+    
+
 };
+

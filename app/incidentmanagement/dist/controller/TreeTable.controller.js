@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/mvc/Controller"],function(e){"use strict";return e.extend("com.amista.incidentmanagement.incidentmanagement.controller.TreeTable",{onInit:async function(){const e=this.getOwnerComponent().getModel("dashboardService");const n=await e.bindContext("/getIncidentTree()").requestObject();const t=new sap.ui.model.json.JSONModel({incidents:n.value});this.getView().setModel(t,"tree")}})});
+//# sourceMappingURL=TreeTable.controller.js.map

@@ -1,0 +1,189 @@
+<mvc:View
+    controllerName="com.amista.incidentmanagement.incidentmanagement.controller.IncidentDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        title="Incident Details"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+    >
+        <content>
+            <!-- Header -->
+
+            <ObjectHeader
+                title="{title}"
+                number="{priority}"
+                numberState="{
+                path:'priority',
+                formatter:'.formatter.formatPriorityState'
+            }"
+                numberUnit="Priority"
+            >
+                <attributes>
+                    <ObjectAttribute
+                        title="Description"
+                        text="{description}"
+                    />
+                    <ObjectAttribute
+                        title="ID"
+                        text="{ID}"
+                    />
+                    <ObjectAttribute
+                        title="Created At"
+                        text="{createdAt}"
+                    />
+                </attributes>
+                <statuses>
+                    <ObjectStatus
+                        title="Status"
+                        text="{status}"
+                        state="{
+                path:'status',
+                formatter:'.formatter.formatStatusState'
+            }"
+                    />
+                </statuses>
+            </ObjectHeader>
+
+            
+
+            <!-- Assignment Information -->
+
+            <Panel
+                headerText="Assignment Information"
+                expandable="true"
+                expanded="true"
+                class="sapUiMediumMargin"
+            >
+                <VBox class="sapUiMediumMargin">
+                    <Label text="Reported By" />
+                    <Text text="{reportedBy/name}" />
+
+                    <Label
+                        text="Assigned To"
+                        class="sapUiSmallMarginTop"
+                    />
+
+                    <Text text="{assignedTo/name}" />
+                </VBox>
+            </Panel>
+
+            <!-- Business Impact -->
+
+            <Panel
+                headerText="Business Impact"
+                expandable="true"
+                expanded="true"
+                class="sapUiMediumMargin"
+            >
+                <VBox class="sapUiMediumMargin">
+                    <Label text="Business Impact" />
+                    <Text text="{businessImpact}" />
+
+                    <Label
+                        text="Affected Users"
+                        class="sapUiSmallMarginTop"
+                    />
+
+                    <ObjectNumber number="{affectedUsers}" />
+
+                    <Label
+                        text="Customer Impact"
+                        class="sapUiSmallMarginTop"
+                    />
+
+                    <ObjectStatus
+                        text="{customerImpact}"
+                        state="{= ${customerImpact} ? 'Error' : 'Success' }"
+                    />
+                </VBox>
+            </Panel>
+
+            <!-- SLA Information -->
+
+            <Panel
+                headerText="SLA Tracking"
+                expandable="true"
+                expanded="true"
+                class="sapUiMediumMargin"
+            >
+                <VBox class="sapUiMediumMargin">
+                    <Label text="Response Due At" />
+                    <Text text="{responseDueAt}" />
+
+                    <Label
+                        text="Resolution Due At"
+                        class="sapUiSmallMarginTop"
+                    />
+
+                    <Text text="{resolutionDueAt}" />
+
+                    <Label
+                        text="Responded At"
+                        class="sapUiSmallMarginTop"
+                    />
+
+                    <Text text="{respondedAt}" />
+
+                    <Label
+                        text="Resolved At"
+                        class="sapUiSmallMarginTop"
+                    />
+
+                    <Text text="{resolvedAt}" />
+                </VBox>
+            </Panel>
+
+            <!-- Duplicate Information -->
+
+            <Panel
+                headerText="Duplicate Information"
+                expandable="true"
+                expanded="true"
+                class="sapUiMediumMargin"
+            >
+                <VBox class="sapUiMediumMargin">
+                    <Label text="Is Duplicate" />
+
+                    <ObjectStatus text="{isDuplicate}" />
+
+                    <Label
+                        text="Master Incident"
+                        class="sapUiSmallMarginTop"
+                    />
+
+                    <Text text="{masterIncident/title}" />
+                </VBox>
+            </Panel>
+
+            <!-- Comments -->
+
+            <Panel
+                headerText="Comments"
+                expandable="true"
+                expanded="true"
+                class="sapUiMediumMargin"
+            >
+                <List items="{comments}">
+                    <CustomListItem>
+                        <VBox>
+                            <Title
+                                level="H5"
+                                text="{user/name}"
+                            />
+
+                            <Text text="{comment}" />
+
+                            <Text
+                                text="{createdAt}"
+                                class="sapUiTinyMarginTop"
+                            />
+                        </VBox>
+                    </CustomListItem>
+                </List>
+            </Panel>
+        </content>
+    </Page>
+</mvc:View>

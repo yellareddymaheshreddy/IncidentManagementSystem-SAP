@@ -35,6 +35,7 @@ type IncidentStatus : String enum {
 }
 
 entity User : cuid, managed {
+    userId        : String(25) ;
     name              : String(255);
     email             : String(255);
     role              : UserRole;
@@ -46,6 +47,7 @@ entity User : cuid, managed {
 }
 
 entity SupportTeam : cuid, managed {
+    teamId     : String(25);
     name        : String(255);
     description : String(1000);
     manager     : Association to User;
@@ -57,6 +59,7 @@ entity SupportTeam : cuid, managed {
 }
 
 entity System : cuid, managed {
+    systemId    : String(25);
     name        : String(255);
     description : String(1000);
     owner       : Association to User;
@@ -67,6 +70,7 @@ entity System : cuid, managed {
 }
 
 entity SLAConfiguration : managed {
+    slaId             : String(25);
     key priority      : Priority;
     description       : String(1000);
     responseTime      : Integer; // in Hours
@@ -78,6 +82,7 @@ entity SLAConfiguration : managed {
 }
 
 entity Incident : cuid, managed {
+    incidentId       : String(25);
     title            : String(255);
     description      : String(1000);
     status           : IncidentStatus default 'New';
@@ -110,12 +115,14 @@ entity Incident : cuid, managed {
 }
 
 entity IncidentComments : cuid, managed {
+    incidentCommentId : String(25);
     incident : Association to Incident;
     comment  : String(1000);
     user     : Association to User;
 }
 
 entity IncidentAlerts : cuid, managed {
+    incidentAlertId : String(25);
     incident : Association to Incident;
     message  : String(1000);
     status   : String(255);

@@ -2,21 +2,23 @@ const SELECT = require("@sap/cds/lib/ql/SELECT");
 const calculatePriority = require("./utils/priority-calculator.js");
 const { getDublicateIncident } = require("./utils/dublicate-incident.js");
 const { calculateSlaDue } = require("./utils/sla-calculator.js");
+const { generateBusinessId } = require("./utils/generateId.js");
+
 
 
 module.exports = (srv) => {
 
-  srv.on("READ", "Incidents", async (req) => {
+ 
+srv.before("READ", "Incidents", req => {
     let userId = req.user.id;
-    if(userId === "anonymous") {
-      userId = "df3bb831-2be3-4695-8995-3f9d37f6d30a";
+
+    if (userId === "anonymous") {
+        userId = "df3bb831-2be3-4695-8995-3f9d37f6d30a";
     }
 
-    return SELECT.from("IncidentManagement.Incident")
-        .where({
-            reportedBy_ID: userId 
-        });
-
+    req.query.where({
+        reportedBy_ID: userId
+    });
 });
 
   srv.before("CREATE", "Incidents", async (req) => {
@@ -28,6 +30,9 @@ module.exports = (srv) => {
     console.log("complete user object:", req.user);
     // TODO: get user id and only show the incidents created by that user
     // req.data.reportedBy_ID = req.user.id;
+
+    //generate unique system ID for the incident
+    req.data.incidentId = await generateBusinessId(req, "INCIDENT_SEQ", "INC");
 
     //duplicate check
     const masterIncident = await getDublicateIncident(req.data.system_ID);

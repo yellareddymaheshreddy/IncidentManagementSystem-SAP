@@ -2,13 +2,15 @@ const SELECT = require("@sap/cds/lib/ql/SELECT");
 const calculatePriority = require("./utils/priority-calculator.js");
 const { getDublicateIncident } = require("./utils/dublicate-incident.js");
 const { calculateSlaDue } = require("./utils/sla-calculator.js");
+const { generateBusinessId } = require("./utils/generateId.js");
 
 
 module.exports = (srv) => {
 
   srv.before("CREATE", "Incidents", async (req) => {
     console.log(req.user.id ,"user is this")
-    
+    //generate unique system ID for the incident
+    req.data.incidentId = await generateBusinessId(req, "INCIDENT_SEQ", "INC");
     //duplicate check
     const masterIncident = await getDublicateIncident(req.data.system_ID);
     if (masterIncident) {
@@ -38,6 +40,11 @@ module.exports = (srv) => {
       req.data.resolutionDueAt = sla.resolutionDueAt;
     }
 
+  });
+
+  srv.before("CREATE", "Systems", async (req) => {
+    req.data.systemId = await generateBusinessId(req, "SYSTEM_SEQ", "SYS");
+    console.log("Generated systemId:", req.data.systemId);
   });
 
   srv.before("UPDATE", "Incidents", async (req) => {

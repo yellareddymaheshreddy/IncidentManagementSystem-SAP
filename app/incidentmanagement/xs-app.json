@@ -15,6 +15,12 @@
       "destination": "ui5"
     },
     {
+  "source": "^/odata/(.*)$",
+  "target": "/odata/$1",
+  "destination": "IncidentManagement-srv",
+  "authenticationType": "xsuaa"
+},
+    {
       "source": "^(.*)$",
       "target": "$1",
       "service": "html5-apps-repo-rt",

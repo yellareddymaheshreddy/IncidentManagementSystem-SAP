@@ -18,6 +18,51 @@ modules:
     instances: 1
   build-parameters:
     builder: npm-ci
+- name: IncidentManagement-destination-content
+  type: com.sap.application.content
+
+  requires:
+    - name: srv-api
+
+    - name: IncidentManagement-destination-service
+      parameters:
+        content-target: true
+
+    - name: IncidentManagement-repo-host
+      parameters:
+        service-key:
+          name: IncidentManagement-html5-repo-host-key
+
+    - name: incident-xsuaa
+      parameters:
+        service-key:
+          name: IncidentManagement-xsuaa-key
+  parameters:
+    content:
+      instance:
+        existing_destinations_policy: update
+
+        destinations:
+
+          - Name: IncidentManagement-srv
+            URL: ~{srv-api/srv-url}
+            Authentication: OAuth2UserTokenExchange
+            TokenServiceInstanceName: incident-xsuaa
+            TokenServiceKeyName: IncidentManagement-xsuaa-key
+            HTML5.ForwardAuthToken: true
+
+          - Name: IncidentManagement-approuter_IncidentManagement_html_repo_host
+            ServiceInstanceName: IncidentManagement-html5-service
+            ServiceKeyName: IncidentManagement-html5-repo-host-key
+            sap.cloud.service: IncidentManagement
+
+          - Name: IncidentManagement-approuter_uaa_IncidentManagement
+            Authentication: OAuth2UserTokenExchange
+            ServiceInstanceName: incident-xsuaa
+            ServiceKeyName: IncidentManagement-xsuaa-key
+            sap.cloud.service: IncidentManagement
+  build-parameters:
+    no-source: true
 - name: IncidentManagement-db-deployer
   type: hdb
   path: gen/db

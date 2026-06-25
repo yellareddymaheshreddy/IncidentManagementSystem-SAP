@@ -1,0 +1,254 @@
+{
+	"_version": "1.85.0",
+	"sap.app": {
+		"id": "com.amista.incidentmanagement.incidentmanagement",
+		"type": "application",
+		"i18n": {
+			"bundleUrl": "i18n/i18n.properties",
+			"supportedLocales": [
+				""
+			]
+		},
+		"sap.cloud": {
+			"public": true,
+			"service": "IncidentManagement"
+		},
+		"applicationVersion": {
+			"version": "0.0.1"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"resources": "resources.json",
+		"sourceTemplate": {
+			"id": "@sap/generator-fiori:basic",
+			"version": "1.26.0",
+			"toolsId": "ec1917c7-5b94-4d1f-830b-4bdabe183915"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/odata/v4/employee/",
+				"type": "OData",
+				"settings": {
+					"annotations": [],
+					"odataVersion": "4.0"
+				}
+			},
+			"dashboardService": {
+				"uri": "/odata/v4/dashboard/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "4.0"
+				}
+			},
+			"adminService": {
+				"uri": "/odata/v4/admin/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "4.0"
+				}
+			}
+		},
+		"crossNavigation": {
+			"inbounds": {
+				"incidentmanagement-display": {
+					"semanticObject": "incidentmanagement",
+					"action": "display",
+					"title": "{{incidentmanagement-display.flpTitle}}",
+					"subTitle": "{{incidentmanagement-display.flpSubtitle}}",
+					"signature": {
+						"parameters": {},
+						"additionalParameters": "allowed"
+					}
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"flexEnabled": false,
+		"dependencies": {
+			"minUI5Version": "1.149.0",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.core": {},
+				"sap.tnt": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.amista.incidentmanagement.incidentmanagement.i18n.i18n",
+					"supportedLocales": [
+						""
+					]
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"operationMode": "Server",
+					"autoExpandSelect": true,
+					"earlyRequests": true
+				}
+			},
+			"dashboardService": {
+				"dataSource": "dashboardService",
+				"preload": true
+			},
+			"adminService": {
+				"dataSource": "adminService",
+				"preload": true
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"controlAggregation": "pages",
+				"controlId": "app",
+				"transition": "slide",
+				"type": "View",
+				"viewType": "XML",
+				"path": "com.amista.incidentmanagement.incidentmanagement.view",
+				"async": true,
+				"viewPath": "com.amista.incidentmanagement.incidentmanagement.view"
+			},
+			"routes": [
+				{
+					"name": "RouteHome",
+					"pattern": ":?query:",
+					"target": [
+						"TargetHome"
+					]
+				},
+				{
+					"name": "CreateIncident",
+					"pattern": "createIncident",
+					"target": "CreateIncident"
+				},
+				{
+					"name": "IncidentDetail",
+					"pattern": "incident/{incidentId}",
+					"target": "IncidentDetail"
+				},
+				{
+					"name": "Dashboard",
+					"pattern": "dashboard",
+					"target": "Dashboard"
+				},
+				{
+					"name": "Alerts",
+					"pattern": "alerts",
+					"target": "Alerts"
+				},
+				{
+					"name": "System",
+					"pattern": "system",
+					"target": "System"
+				},
+				{
+					"name": "SlaConfig",
+					"pattern": "slaConfig",
+					"target": "SlaConfig"
+				},
+				{
+					"name": "SupportTeam",
+					"pattern": "supportTeam",
+					"target": "SupportTeam"
+				},
+				{
+					"name": "UserManagement",
+					"pattern": "userManagement",
+					"target": "UserManagement"
+				},
+				{
+					"name": "UserDetail",
+					"pattern": "user/{userId}",
+					"target": [
+						"UserDetail"
+					]
+				}
+			],
+			"targets": {
+				"TargetHome": {
+					"id": "Home",
+					"name": "incidents.IncidentList"
+				},
+				"CreateIncident": {
+					"id": "CreateIncident",
+					"name": "incidents.CreateIncident"
+				},
+				"IncidentDetail": {
+					"id": "IncidentDetail",
+					"name": "incidents.IncidentDetail"
+				},
+				"Dashboard": {
+					"id": "Dashboard",
+					"name": "Dashboard"
+				},
+				"System": {
+					"id": "System",
+					"name": "admin.System"
+				},
+				"Alerts": {
+					"id": "Alerts",
+					"name": "Alerts"
+				},
+				"SlaConfig": {
+					"id": "SlaConfig",
+					"name": "admin.SlaConfig"
+				},
+				"SupportTeam": {
+					"id": "SupportTeam",
+					"name": "admin.SupportTeam"
+				},
+				"UserManagement": {
+					"id": "UserManagement",
+					"name": "admin.UserManagement"
+				},
+				"UserDetail": {
+					"id": "UserDetail",
+					"name": "admin.UserDetail"
+				},
+				"TreeTable": {
+					"id": "TreeTable",
+					"name": "TreeTable"
+				}
+			}
+		},
+		"rootView": {
+			"viewName": "com.amista.incidentmanagement.incidentmanagement.view.App",
+			"type": "XML",
+			"id": "App",
+			"async": true
+		},
+		"flexBundle": false
+	}
+}

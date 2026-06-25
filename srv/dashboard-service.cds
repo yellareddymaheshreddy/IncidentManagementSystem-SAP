@@ -5,6 +5,7 @@ service DashboardService {
     function getPendingAlerts()         returns many Alerts;
     function getIncidentStatusSummary() returns many IncidentStatusSummary;
     function getIncidentTree()       returns many Incident;
+    function getChartData() returns many IncidentTrend;
 
 }
 

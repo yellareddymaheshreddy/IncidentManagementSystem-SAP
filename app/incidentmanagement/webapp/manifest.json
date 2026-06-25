@@ -4,6 +4,10 @@
     "id": "com.amista.incidentmanagement.incidentmanagement",
     "type": "application",
     "i18n": "i18n/i18n.properties",
+    "sap.cloud": {
+      "public": true,
+      "service": "IncidentManagement"
+    },
     "applicationVersion": {
       "version": "0.0.1"
     },
@@ -161,20 +165,20 @@
           "pattern": "system",
           "target": "System"
         },
-          {
-            "name": "SlaConfig",
-            "pattern": "slaConfig",
-            "target": "SlaConfig"
-          },
-          {
-            "name": "SupportTeam",
-            "pattern": "supportTeam",
-            "target": "SupportTeam"
-          },
         {
-          "name":"UserManagement",
-          "pattern":"userManagement",
-          "target":"UserManagement"
+          "name": "SlaConfig",
+          "pattern": "slaConfig",
+          "target": "SlaConfig"
+        },
+        {
+          "name": "SupportTeam",
+          "pattern": "supportTeam",
+          "target": "SupportTeam"
+        },
+        {
+          "name": "UserManagement",
+          "pattern": "userManagement",
+          "target": "UserManagement"
         },
         {
           "name": "UserDetail",

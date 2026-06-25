@@ -1,0 +1,125 @@
+<mvc:View
+    controllerName="com.amista.incidentmanagement.incidentmanagement.controller.App"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:tnt="sap.tnt"
+    xmlns:core="sap.ui.core"
+>
+    <tnt:ToolPage id="toolPage">
+        <tnt:header>
+            <tnt:ToolHeader>
+                <Button
+                    id="sideNavigationToggleButton"
+                    icon="sap-icon://menu"
+                    press=".onSideNavigationToggleButtonPress"
+                    tooltip="Toggle Navigation"
+                />
+                <Title
+                    text="Incident Management Hub"
+                    level="H1"
+                    class="sapUiSmallMarginBegin"
+                />
+                <ToolbarSpacer />
+
+                <!-- Role Switcher for Demonstration -->
+                <Label
+                    text="View Role:"
+                    design="Bold"
+                    class="sapUiMediumMarginEnd"
+                />
+                <Select
+                    id="roleSelect"
+                    change=".onRoleChange"
+                    selectedKey="Employee"
+                    width="180px"
+                >
+                    <items>
+                        <core:Item
+                            key="Employee"
+                            text="Employee (Mahesh)"
+                        />
+                        <core:Item
+                            key="Admin"
+                            text="Admin (Priya)"
+                        />
+                    </items>
+                </Select>
+                <ToolbarSpacer width="15px" />
+                <Button
+                    id="alertsBellButton"
+                    icon="sap-icon://bell"
+                    type="Transparent"
+                    press=".onAlertsIconPress"
+                    tooltip="Active Outage Alerts"
+                >
+                    <customData>
+                        <BadgeCustomData
+                            value="{alertsCountModel>/count}"
+                            visible="true"
+                        />
+                    </customData>
+                </Button>
+                <ToolbarSpacer width="15px" />
+                <Avatar
+                    src="sap-icon://person-placeholder"
+                    press=".onUserProfilePress"
+                    displaySize="XS"
+                />
+            </tnt:ToolHeader>
+        </tnt:header>
+
+        <tnt:sideContent>
+            <tnt:SideNavigation
+                id="sideNavigation"
+                itemSelect=".onSideNavItemSelect"
+            >
+                <tnt:NavigationList>
+                    <tnt:NavigationListItem
+                        text="Dashboard"
+                        icon="sap-icon://bbyd-dashboard"
+                        key="Dashboard"
+                    />
+                    <tnt:NavigationListItem
+                        text="Incidents"
+                        icon="sap-icon://list"
+                        key="RouteHome"
+                    />
+                    <tnt:NavigationListItem
+                        text="Create Incident"
+                        icon="sap-icon://add"
+                        key="CreateIncident"
+                    />
+                    <tnt:NavigationListItem
+                        text="Systems"
+                        icon="sap-icon://settings"
+                        key="System"
+                        visible="{user>/isAdmin}"
+                    />
+                    <tnt:NavigationListItem
+                        text="Support Teams"
+                        icon="sap-icon://group"
+                        key="SupportTeam"
+                        visible="{user>/isAdmin}"
+                    />
+                    <tnt:NavigationListItem
+                        text="SLA Configs"
+                        icon="sap-icon://wrench"
+                        key="SlaConfig"
+                        visible="{user>/isAdmin}"
+                    />
+                    <tnt:NavigationListItem
+                        text="User Management"
+                        icon="sap-icon://wrench"
+                        key="UserManagement"
+                        visible="{user>/isAdmin}"
+                    />
+                </tnt:NavigationList>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+
+        <tnt:mainContents>
+            <App id="app" />
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>
