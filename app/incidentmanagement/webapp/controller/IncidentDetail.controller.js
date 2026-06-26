@@ -2,8 +2,9 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "../model/formatter",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageToast"
-], function (Controller, formatter, JSONModel, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/m/MessageBox"
+], function (Controller, formatter, JSONModel, MessageToast, MessageBox) {
     "use strict";
 
     return Controller.extend(
@@ -165,6 +166,102 @@ sap.ui.define([
                         userId: sUserId
                     });
 
+            },
+            async onAssignIncident() {
+
+                const sUserId =
+                    this.byId("assignUserSelect").getSelectedKey();
+
+                if (!sUserId) {
+                    MessageToast.show("Select a user");
+                    return;
+                }
+
+                const oContext =
+                    this.getView().getBindingContext();
+
+                oContext.setProperty("assignedTo_ID", sUserId);
+
+                await this.getView().getModel().submitBatch("$auto");
+
+                MessageToast.show("Incident Assigned");
+            },
+            async onResolveIncident() {
+
+                const oContext =
+                    this.getView().getBindingContext();
+
+                oContext.setProperty("status", "Resolved");
+
+                oContext.setProperty(
+                    "resolvedAt",
+                    new Date().toISOString()
+                );
+
+                await this.getView().getModel().submitBatch("$auto");
+
+                MessageToast.show("Incident Resolved");
+            },
+            async onDeleteIncident() {
+
+                MessageBox.confirm(
+                    "Delete this incident?",
+                    {
+                        actions: [
+                            MessageBox.Action.OK,
+                            MessageBox.Action.CANCEL
+                        ],
+
+                        onClose: async (sAction) => {
+
+                            if (sAction !== MessageBox.Action.OK) {
+                                return;
+                            }
+
+                            await this.getView()
+                                .getBindingContext()
+                                .delete();
+
+                            MessageToast.show("Incident Deleted");
+
+                            this.getOwnerComponent()
+                                .getRouter()
+                                .navTo("RouteHome");
+                        }
+                    }
+                );
+            },
+            async onUpdateIncident() {
+
+                const oContext = this.getView().getBindingContext();
+
+                const sAssignedTo =
+                    this.byId("assignUserSelect").getSelectedKey();
+
+                const sStatus =
+                    this.byId("statusSelect").getSelectedKey();
+
+                const sPriority =
+                    this.byId("prioritySelect").getSelectedKey();
+
+                oContext.setProperty("assignedTo_ID", sAssignedTo);
+
+                oContext.setProperty("status", sStatus);
+
+                oContext.setProperty("priority", sPriority);
+
+                if (sStatus === "Resolved") {
+                    oContext.setProperty(
+                        "resolvedAt",
+                        new Date().toISOString()
+                    );
+                }
+
+                await this.getView()
+                    .getModel()
+                    .submitBatch("$auto");
+
+                MessageToast.show("Incident updated successfully");
             }
 
 

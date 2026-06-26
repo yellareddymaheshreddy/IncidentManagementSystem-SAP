@@ -72,7 +72,7 @@
                 </uxap:subSections>
             </uxap:ObjectPageSection>
 
-            <uxap:ObjectPageSection title="Assigned Incidents">
+            <uxap:ObjectPageSection title="Assigned Incidents" >
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection>
                         <uxap:blocks>
@@ -80,7 +80,7 @@
                                 <headerToolbar>
                                     <OverflowToolbar>
                                         <ToolbarSpacer/>
-                                        <Button text="Assign Incident" type="Default" icon="sap-icon://employee-approvals" press=".onAssignIncident" visible="{userModel>/isAdmin}"/>
+                                        <Button text="Assign Incident"  type="Default" icon="sap-icon://employee-approvals" press=".onAssignIncident" visible="{user>/isAdmin}"/>
                                     </OverflowToolbar>
                                 </headerToolbar>
                                 <columns>

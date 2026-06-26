@@ -1,7 +1,8 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
-    "com/amista/incidentmanagement/incidentmanagement/model/models"
-], (UIComponent, models) => {
+    "com/amista/incidentmanagement/incidentmanagement/model/models",
+    "sap/ui/core/Core"
+], (UIComponent, models, Core) => {
     "use strict";
 
     return UIComponent.extend("com.amista.incidentmanagement.incidentmanagement.Component", {
@@ -17,7 +18,8 @@ sap.ui.define([
 
             // call the base component's init function
             UIComponent.prototype.init.apply(this, arguments);
-
+            //theme set
+            Core.applyTheme(localStorage.getItem("sap-ui-theme")||"sap_horizon");
                await this.loadCurrentUser()
 
             // set the device model

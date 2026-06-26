@@ -1,7 +1,8 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
-], function (Controller, JSONModel) {
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Core"
+], function (Controller, JSONModel, Core) {
     "use strict";
 
     return Controller.extend("com.amista.incidentmanagement.incidentmanagement.controller.App", {
@@ -17,6 +18,12 @@ sap.ui.define([
 
             // Refresh count every 30 seconds
             this._iIntervalId = setInterval(this._fetchAlertsCount.bind(this), 30000);
+
+            
+            const sTheme = localStorage.getItem("sap-ui-theme");
+            if(sTheme === "sap_horizon_dark") {
+                this.byId("themeSwitch").setState(true);
+            }
         },
 
             onExit: function () {
@@ -94,7 +101,16 @@ sap.ui.define([
                 userId: sUserId
             });
         },
+        onThemeSwitch: function (oEvent) {
+            const bState = oEvent.getParameter("state");
+            if (bState) {
+                Core.applyTheme("sap_horizon_dark");
+                localStorage.setItem("sap-ui-theme", "sap_horizon_dark");
+            } else {
+                Core.applyTheme("sap_horizon");
+                localStorage.setItem("sap-ui-theme", "sap_horizon");
+            }
 
-
+        }
         });
     });

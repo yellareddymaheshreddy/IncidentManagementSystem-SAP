@@ -52,6 +52,7 @@ sap.ui.define([
                     })
                 }
             });
+            
 
             const oDialog = new Dialog({
                 title: "Assign Incident to " + sUserName,

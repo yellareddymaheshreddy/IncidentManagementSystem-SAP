@@ -21,6 +21,12 @@
                     class="sapUiSmallMarginBegin"
                 />
                 <ToolbarSpacer />
+                <Switch
+                    change=".onThemeSwitch"
+                    id="themeSwitch"
+                    customTextOn="Dark"
+                    customTextOff="Light"
+                />
 
                 <!-- Role Switcher for Demonstration -->
                 <Label
