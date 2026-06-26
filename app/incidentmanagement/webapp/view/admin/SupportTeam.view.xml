@@ -30,7 +30,7 @@
                     <items>
                         <ColumnListItem>
                             <cells>
-                                <Label text="{adminService>ID}" design="Bold"/>
+                                <Label text="{adminService>teamId}" design="Bold"/>
                                 <Input value="{adminService>name}"/>
                                 <Input value="{adminService>description}"/>
                                 <ComboBox selectedKey="{adminService>manager_ID}" items="{adminService>/Users}">

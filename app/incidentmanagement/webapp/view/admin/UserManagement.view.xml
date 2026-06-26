@@ -27,7 +27,7 @@
                     <items>
                         <ColumnListItem type="Navigation" press=".onUserPress">
                             <cells>
-                                <Label text="{adminService>ID}" design="Bold"/>
+                                <Label text="{adminService>userId}" design="Bold"/>
                                 <Input value="{adminService>name}"/>
                                 <Input value="{adminService>email}"/>
                                 <Select selectedKey="{adminService>role}">

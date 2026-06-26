@@ -1,4 +1,4 @@
-ID,name,description,manager_ID
-73f570f7-b873-4c78-937a-d2b4f2d539cd,Basis Team,SAP Basis Administration,df3bb831-2be3-4695-8995-3f9d37f6d30b
-de8c4cc9-4a57-470e-ba3d-db3243f0e0e2,CPI Team,SAP CPI Integration Support,df3bb831-2be3-4695-8995-3f9d37f6d30d
-8cef2417-821b-4438-8838-962372174e60,SuccessFactors Team,HR Application Support,df3bb831-2be3-4695-8995-3f9d37f6d30d
+ID,name,description,manager_ID,teamId
+73f570f7-b873-4c78-937a-d2b4f2d539cd,Basis Team,SAP Basis Administration,df3bb831-2be3-4695-8995-3f9d37f6d30b,TM001
+de8c4cc9-4a57-470e-ba3d-db3243f0e0e2,CPI Team,SAP CPI Integration Support,df3bb831-2be3-4695-8995-3f9d37f6d30d,TM002
+8cef2417-821b-4438-8838-962372174e60,SuccessFactors Team,HR Application Support,df3bb831-2be3-4695-8995-3f9d37f6d30d,TM003

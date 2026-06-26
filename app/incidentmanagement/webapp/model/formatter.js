@@ -34,6 +34,36 @@ sap.ui.define([], function () {
             }
 
             return new Date(sValue).toLocaleString("en-IN");
-        }
+        },
+        // Add to existing formatter.js
+
+formatStatusIcon: function (sStatus) {
+    const icons = {
+        "New":        "sap-icon://status-new",
+        "Open":       "sap-icon://status-in-process",
+        "Assigned":   "sap-icon://person-placeholder",
+        "InProgress": "sap-icon://status-in-process",
+        "resolved":   "sap-icon://status-completed",
+        "closed":     "sap-icon://status-completed"
+    };
+    return icons[sStatus] || "sap-icon://status-inactive";
+},
+
+formatSeverityState: function (sSeverity) {
+    const map = {
+        "critical": "Error",
+        "high":     "Warning",
+        "medium":   "None",
+        "low":      "Success"
+    };
+    return map[sSeverity?.toLowerCase()] || "None";
+},
+
+formatAffectedUsersState: function (nUsers) {
+    if (!nUsers) return "None";
+    if (nUsers > 1000) return "Error";
+    if (nUsers > 100)  return "Warning";
+    return "Success";
+}
     };
 });

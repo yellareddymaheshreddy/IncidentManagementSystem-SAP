@@ -3,6 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
 >
     <Page
         title="Incident Details"
@@ -10,179 +11,339 @@
         navButtonPress=".onNavBack"
     >
         <content>
-            <!-- Header -->
-
-            <ObjectHeader
-                title="{title}"
-                number="{priority}"
-                numberState="{
-                path:'priority',
-                formatter:'.formatter.formatPriorityState'
-            }"
-                numberUnit="Priority"
+            <!-- ═══ HERO HEADER ═══ -->
+            <VBox
+                class="sapUiMediumMarginBeginEnd sapUiSmallMarginTop sapUiSmallMarginBottom"
             >
-                <attributes>
-                    <ObjectAttribute
-                        title="Description"
-                        text="{description}"
+                <!-- Title + Priority + Status row -->
+                <HBox
+                    justifyContent="SpaceBetween"
+                    alignItems="Start"
+                >
+                    <Title
+                        level="H1"
+                        text="{= ${title} ? ${title} : 'Untitled Incident'}"
+                        wrapping="true"
+                        class="sapUiSmallMarginEnd"
                     />
-                    <ObjectAttribute
-                        title="ID"
-                        text="{ID}"
-                    />
-                    <ObjectAttribute
-                        title="Created At"
-                        text="{createdAt}"
-                    />
-                </attributes>
-                <statuses>
-                    <ObjectStatus
-                        title="Status"
-                        text="{status}"
-                        state="{
-                path:'status',
-                formatter:'.formatter.formatStatusState'
-            }"
-                    />
-                </statuses>
-            </ObjectHeader>
+                    <VBox
+                        alignItems="End"
+                        class="sapUiNoFlexItemShrink"
+                    >
+                        <ObjectNumber
+                            number="{= ${priority} ? ${priority} : '—'}"
+                            state="{path:'priority', formatter:'.formatter.formatPriorityState'}"
+                            unit="Priority"
+                            emphasized="true"
+                        />
+                        <ObjectStatus
+                            text="{= ${status} ? ${status} : '—'}"
+                            state="{path:'status', formatter:'.formatter.formatStatusState'}"
+                            class="sapUiTinyMarginTop"
+                        />
+                    </VBox>
+                </HBox>
 
-            
+                <!-- Description -->
+                <Text
+                    text="{= ${description} ? ${description} : 'No description provided.'}"
+                    wrapping="true"
+                    class="sapUiSmallMarginTop"
+                />
 
-            <!-- Assignment Information -->
+                <!-- Meta row: ID · Created At -->
+                <HBox
+                    wrap="Wrap"
+                    class="sapUiSmallMarginTop"
+                    alignItems="Center"
+                >
+                    <HBox
+                        alignItems="Center"
+                        class="sapUiSmallMarginEnd"
+                    >
+                        <core:Icon
+                            src="sap-icon://tag"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <Label
+                            text="Incident ID:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <Text text="{= ${incidentId} ? ${incidentId} : '—'}" />
+                    </HBox>
+                    <HBox alignItems="Center">
+                        <core:Icon
+                            src="sap-icon://appointment-2"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <Label
+                            text="Created:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <Text text="{= ${createdAt} ? ${createdAt} : '—'}" />
+                    </HBox>
+                </HBox>
+            </VBox>
 
-            <Panel
-                headerText="Assignment Information"
-                expandable="true"
-                expanded="true"
-                class="sapUiMediumMargin"
+            <!-- ═══ ROW 1: ASSIGNMENT | BUSINESS IMPACT ═══ -->
+            <l:Grid
+                defaultSpan="L6 M6 S12"
+                class="sapUiMediumMarginBeginEnd sapUiSmallMarginTop"
             >
-                <VBox class="sapUiMediumMargin">
-                    <Label text="Reported By" />
-                    <Text text="{reportedBy/name}" />
+                <l:content>
+                    <!-- Assignment -->
+                    <Panel headerText="Assignment">
+                        <VBox
+                            class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom"
+                        >
+                            <Label
+                                text="Reported By"
+                                design="Bold"
+                            />
+                            <HBox
+                                alignItems="Center"
+                                class="sapUiTinyMarginTop sapUiSmallMarginBottom"
+                            >
+                                <core:Icon
+                                    src="sap-icon://person-placeholder"
+                                    size="1.5rem"
+                                    class="sapUiSmallMarginEnd"
+                                />
+                                <Link
+                                    text="{= ${reportedBy/name} ? ${reportedBy/name} : '—'}"
+                                    press=".onReportedByPress"
+                                />
+                            </HBox>
 
-                    <Label
-                        text="Assigned To"
-                        class="sapUiSmallMarginTop"
-                    />
+                            <Label
+                                text="Assigned To"
+                                design="Bold"
+                            />
+                            <HBox
+                                alignItems="Center"
+                                class="sapUiTinyMarginTop"
+                            >
+                                <core:Icon
+                                    src="sap-icon://person-placeholder"
+                                    size="1.5rem"
+                                    class="sapUiSmallMarginEnd"
+                                />
+                                <Link
+                                    text="{= ${assignedTo/name} ? ${assignedTo/name} : '—'}"
+                                    press=".onAssignedToPress"
+                                />
+                            </HBox>
+                        </VBox>
+                    </Panel>
 
-                    <Text text="{assignedTo/name}" />
-                </VBox>
-            </Panel>
-
-            <!-- Business Impact -->
-
-            <Panel
-                headerText="Business Impact"
-                expandable="true"
-                expanded="true"
-                class="sapUiMediumMargin"
-            >
-                <VBox class="sapUiMediumMargin">
-                    <Label text="Business Impact" />
-                    <Text text="{businessImpact}" />
-
-                    <Label
-                        text="Affected Users"
-                        class="sapUiSmallMarginTop"
-                    />
-
-                    <ObjectNumber number="{affectedUsers}" />
-
-                    <Label
-                        text="Customer Impact"
-                        class="sapUiSmallMarginTop"
-                    />
-
-                    <ObjectStatus
-                        text="{customerImpact}"
-                        state="{= ${customerImpact} ? 'Error' : 'Success' }"
-                    />
-                </VBox>
-            </Panel>
-
-            <!-- SLA Information -->
-
-            <Panel
-                headerText="SLA Tracking"
-                expandable="true"
-                expanded="true"
-                class="sapUiMediumMargin"
-            >
-                <VBox class="sapUiMediumMargin">
-                    <Label text="Response Due At" />
-                    <Text text="{responseDueAt}" />
-
-                    <Label
-                        text="Resolution Due At"
-                        class="sapUiSmallMarginTop"
-                    />
-
-                    <Text text="{resolutionDueAt}" />
-
-                    <Label
-                        text="Responded At"
-                        class="sapUiSmallMarginTop"
-                    />
-
-                    <Text text="{respondedAt}" />
-
-                    <Label
-                        text="Resolved At"
-                        class="sapUiSmallMarginTop"
-                    />
-
-                    <Text text="{resolvedAt}" />
-                </VBox>
-            </Panel>
-
-            <!-- Duplicate Information -->
-
-            <Panel
-                headerText="Duplicate Information"
-                expandable="true"
-                expanded="true"
-                class="sapUiMediumMargin"
-            >
-                <VBox class="sapUiMediumMargin">
-                    <Label text="Is Duplicate" />
-
-                    <ObjectStatus text="{isDuplicate}" />
-
-                    <Label
-                        text="Master Incident"
-                        class="sapUiSmallMarginTop"
-                    />
-
-                    <Text text="{masterIncident/title}" />
-                </VBox>
-            </Panel>
-
-            <!-- Comments -->
-
-            <Panel
-                headerText="Comments"
-                expandable="true"
-                expanded="true"
-                class="sapUiMediumMargin"
-            >
-                <List items="{comments}">
-                    <CustomListItem>
-                        <VBox>
-                            <Title
-                                level="H5"
-                                text="{user/name}"
+                    <!-- Business Impact -->
+                    <Panel headerText="Business Impact">
+                        <VBox
+                            class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom"
+                        >
+                            <Label
+                                text="Impact Description"
+                                design="Bold"
+                            />
+                            <Text
+                                text="{= ${businessImpact} ? ${businessImpact} : '—'}"
+                                wrapping="true"
+                                class="sapUiTinyMarginTop sapUiSmallMarginBottom"
                             />
 
-                            <Text text="{comment}" />
+                            <l:Grid defaultSpan="L6 M6 S12">
+                                <l:content>
+                                    <VBox>
+                                        <Label
+                                            text="Affected Users"
+                                            design="Bold"
+                                        />
+                                        <ObjectNumber
+                                            number="{= ${affectedUsers} !== undefined ? ${affectedUsers} : 0}"
+                                            class="sapUiTinyMarginTop"
+                                        />
+                                    </VBox>
+                                    <VBox>
+                                        <Label
+                                            text="Customer Impact"
+                                            design="Bold"
+                                        />
+                                        <ObjectStatus
+                                            text="{= ${customerImpact} ? ${customerImpact} : 'None'}"
+                                            state="{= ${customerImpact} ? 'Error' : 'Success'}"
+                                            class="sapUiTinyMarginTop"
+                                        />
+                                    </VBox>
+                                </l:content>
+                            </l:Grid>
 
+                            <l:Grid
+                                defaultSpan="L6 M6 S12"
+                                class="sapUiSmallMarginTop"
+                            >
+                                <l:content>
+                                    <VBox>
+                                        <Label
+                                            text="Is Duplicate"
+                                            design="Bold"
+                                        />
+                                        <ObjectStatus
+                                            text="{= ${isDuplicate} ? 'Yes' : 'No'}"
+                                            state="{= ${isDuplicate} ? 'Warning' : 'Success'}"
+                                            class="sapUiTinyMarginTop"
+                                        />
+                                    </VBox>
+                                    <VBox>
+                                        <Label
+                                            text="Master Incident"
+                                            design="Bold"
+                                        />
+
+                                        <!-- Show link with arrow only when masterIncident exists -->
+                                        <HBox
+                                            alignItems="Center"
+                                            class="sapUiTinyMarginTop"
+                                            visible="{= !!${masterIncident/ID} }"
+                                        >
+                                            <Link
+                                                text="{= ${masterIncident/title} ? ${masterIncident/title} : 'View Master Incident'}"
+                                                press=".onNavToMasterIncident"
+                                                emphasized="true"
+                                            />
+                                            <core:Icon
+                                                src="sap-icon://arrow-right"
+                                                class="sapUiTinyMarginBegin"
+                                                color="Neutral"
+                                            />
+                                        </HBox>
+
+                                        <!-- Fallback when no master incident linked -->
+                                        <Text
+                                            text="—"
+                                            visible="{= !${masterIncident/ID} }"
+                                            class="sapUiTinyMarginTop"
+                                        />
+                                    </VBox>
+                                </l:content>
+                            </l:Grid>
+                        </VBox>
+                    </Panel>
+                </l:content>
+            </l:Grid>
+
+            <!-- ═══ SLA TRACKING — FULL WIDTH 4-COL ═══ -->
+            <Panel
+                headerText="SLA Tracking"
+                class="sapUiMediumMarginBeginEnd sapUiSmallMarginTop"
+            >
+                <l:Grid
+                    defaultSpan="L3 M6 S12"
+                    class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom"
+                >
+                    <l:content>
+                        <VBox>
+                            <Label
+                                text="Response Due"
+                                design="Bold"
+                            />
                             <Text
-                                text="{createdAt}"
+                                text="{= ${responseDueAt} ? ${responseDueAt} : '—'}"
                                 class="sapUiTinyMarginTop"
                             />
                         </VBox>
+                        <VBox>
+                            <Label
+                                text="Resolution Due"
+                                design="Bold"
+                            />
+                            <Text
+                                text="{= ${resolutionDueAt} ? ${resolutionDueAt} : '—'}"
+                                class="sapUiTinyMarginTop"
+                            />
+                        </VBox>
+                        <VBox>
+                            <Label
+                                text="Responded At"
+                                design="Bold"
+                            />
+                            <Text
+                                text="{= ${respondedAt} ? ${respondedAt} : 'Not yet'}"
+                                class="sapUiTinyMarginTop"
+                            />
+                        </VBox>
+                        <VBox>
+                            <Label
+                                text="Resolved At"
+                                design="Bold"
+                            />
+                            <Text
+                                text="{= ${resolvedAt} ? ${resolvedAt} : 'Not yet'}"
+                                class="sapUiTinyMarginTop"
+                            />
+                        </VBox>
+                    </l:content>
+                </l:Grid>
+            </Panel>
+            <!-- Comments -->
+            <Panel
+                headerText="Comments"
+                class="sapUiMediumMarginBeginEnd sapUiSmallMarginTop sapUiSmallMarginBottom"
+            >
+                <List
+                    items="{comments}"
+                    noDataText="No comments yet"
+                    showNoData="true"
+                >
+                    <CustomListItem>
+                        <HBox
+                            alignItems="Start"
+                            class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom"
+                        >
+                            <core:Icon
+                                src="sap-icon://person-placeholder"
+                                size="1.5rem"
+                                class="sapUiSmallMarginEnd"
+                            />
+                            <VBox>
+                                <Link
+                                    text="{= ${user/name} ? ${user/name} : 'Unknown User'}"
+                                    target="{user/ID}"
+                                    press=".onUserPress"
+                                />
+                                <Text
+                                    text="{= ${comment} ? ${comment} : ''}"
+                                    wrapping="true"
+                                    class="sapUiTinyMarginTop"
+                                />
+                                <ObjectStatus
+                                    text="{= ${createdAt} ? ${createdAt} : ''}"
+                                    icon="sap-icon://appointment-2"
+                                    class="sapUiTinyMarginTop"
+                                />
+                            </VBox>
+                        </HBox>
                     </CustomListItem>
                 </List>
+                <VBox class="sapUiMediumMargin">
+                    <TextArea
+                        id="commentInput"
+                        rows="3"
+                        width="100%"
+                        placeholder="Write a comment..."
+                    />
+
+                    <HBox
+                        justifyContent="End"
+                        class="sapUiSmallMarginTop"
+                    >
+                        <Button
+                            text="Add Comment"
+                            icon="sap-icon://comment"
+                            type="Emphasized"
+                            press=".onAddComment"
+                        />
+                    </HBox>
+                </VBox>
             </Panel>
         </content>
     </Page>

@@ -10,13 +10,6 @@ sap.ui.define([
         onInit: function () {
             const oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("Alerts").attachPatternMatched(this._onRouteMatched, this);
-
-            // Subscribe to Role changes
-            this.getOwnerComponent().getEventBus().subscribe("DefaultChannel", "RoleChanged", this.onRefresh, this);
-        },
-
-        onExit: function () {
-            this.getOwnerComponent().getEventBus().unsubscribe("DefaultChannel", "RoleChanged", this.onRefresh, this);
         },
 
         _onRouteMatched: function () {
@@ -58,6 +51,7 @@ sap.ui.define([
             const oItem = oEvent.getSource().getParent();
             const oContext = oItem.getBindingContext("alertsModel");
             const sIncidentId = oContext.getProperty("incidentId");
+            console.log("Investigate incident with ID:", sIncidentId);
 
             if (sIncidentId) {
                 this.getOwnerComponent().getRouter().navTo("IncidentDetail", {

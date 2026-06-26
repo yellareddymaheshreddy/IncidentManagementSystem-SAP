@@ -84,6 +84,13 @@
                         text="Incidents"
                         icon="sap-icon://list"
                         key="RouteHome"
+                        visible="{= !${user>/isAdmin}}"
+                    />
+                    <tnt:NavigationListItem
+                        text="Incidents"
+                        icon="sap-icon://list"
+                        key="TreeTable"
+                        visible="{user>/isAdmin}"
                     />
                     <tnt:NavigationListItem
                         text="Create Incident"

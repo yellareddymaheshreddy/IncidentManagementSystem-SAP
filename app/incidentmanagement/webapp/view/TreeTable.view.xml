@@ -2,92 +2,305 @@
     controllerName="com.amista.incidentmanagement.incidentmanagement.controller.TreeTable"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.ui.table"
-    xmlns:m="sap.m">
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:unified="sap.ui.unified"
+>
+    <m:Page
+        title="Incident Hierarchy"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+    >
+        <!-- ═══ TOOLBAR ═══ -->
+        <m:headerContent>
+            <m:Button
+                icon="sap-icon://refresh"
+                tooltip="Refresh"
+                press=".onRefresh"
+            />
+        </m:headerContent>
 
-    <m:Page title="Incident Hierarchy">
+        <m:subHeader>
+            <m:Toolbar>
+
+                <!-- Search -->
+                <m:SearchField
+                    id="searchFieldd"
+                    placeholder="Search by title or description..."
+                    width="280px"
+                    search=".onSearch"
+                    liveChange=".onSearch"
+                />
+
+                <m:ToolbarSpacer />
+
+                <!-- Priority Filter -->
+                <m:Label text="Priority:" class="sapUiTinyMarginEnd" />
+                <m:Select
+                    id="priorityFilterd"
+                    change=".onFilterChange"
+                    width="130px"
+                >
+                    <m:items>
+                        <core:Item key="" text="All Priorities" />
+                        <core:Item key="critical" text="Critical" />
+                        <core:Item key="high"     text="High" />
+                        <core:Item key="medium"   text="Medium" />
+                        <core:Item key="low"      text="Low" />
+                    </m:items>
+                </m:Select>
+
+                <!-- Status Filter -->
+                <m:Label text="Status:" class="sapUiSmallMarginBegin sapUiTinyMarginEnd" />
+                <m:Select
+                    id="statusFilterd"
+                    change=".onFilterChange"
+                    width="140px"
+                >
+                    <m:items>
+                        <core:Item key=""           text="All Statuses" />
+                        <core:Item key="New"        text="New" />
+                        <core:Item key="Open"       text="Open" />
+                        <core:Item key="Assigned"   text="Assigned" />
+                        <core:Item key="InProgress" text="In Progress" />
+                        <core:Item key="resolved"   text="Resolved" />
+                        <core:Item key="closed"     text="Closed" />
+                    </m:items>
+                </m:Select>
+
+                <!-- Expand / Collapse All -->
+                <m:Button
+                    text="Expand All"
+                    icon="sap-icon://expand-all"
+                    press=".onExpandAll"
+                    class="sapUiSmallMarginBegin"
+                    type="Transparent"
+                />
+                <m:Button
+                    text="Collapse All"
+                    icon="sap-icon://collapse-all"
+                    press=".onCollapseAll"
+                    type="Transparent"
+                />
+
+                <!-- Row count badge -->
+                <m:ObjectStatus
+                    id="rowCountStatus"
+                    text="0 incidents"
+                    icon="sap-icon://list"
+                    class="sapUiSmallMarginBegin"
+                />
+
+            </m:Toolbar>
+        </m:subHeader>
 
         <m:content>
-
             <TreeTable
                 id="incidentTreeTable"
                 selectionMode="Single"
-                visibleRowCount="4"
+                visibleRowCountMode="Auto"
+                minAutoRowCount="10"
+                enableColumnReordering="true"
+                enableColumnFreeze="true"
+                showColumnVisibilityMenu="true"
+                rowSelectionChange=".onRowSelectionChange"
+                cellClick=".onCellClick"
                 rows="{
-                    path:'tree>/incidents',
-                    parameters:{
-                        arrayNames:['dublicates']
+                    path: 'tree>/incidents',
+                    parameters: {
+                        arrayNames: ['dublicates']
                     }
-                }">
+                }"
+            >
+                <!-- Table Toolbar -->
+                <toolbar>
+                    <m:OverflowToolbar>
+                        <m:Title text="Incident Hierarchy" level="H3" />
+                        <m:ToolbarSpacer />
+                        <m:Button
+                            id="navigateBtn"
+                            text="Open Incident"
+                            icon="sap-icon://open-command-field"
+                            type="Emphasized"
+                            enabled="false"
+                            press=".onNavigateToDetail"
+                        />
+                    </m:OverflowToolbar>
+                </toolbar>
+
+                <extension>
+                    <m:OverflowToolbar>
+                        <m:Text id="selectionInfo" text="Select a row to view details" />
+                    </m:OverflowToolbar>
+                </extension>
 
                 <columns>
 
-                    <Column width="300px">
-                        <m:Label text="Title"/>
+                    <!-- Title — tree expand column -->
+                    <Column
+                        width="280px"
+                        sortProperty="title"
+                        filterProperty="title"
+                        sorted="true"
+                        sortOrder="Ascending"
+                    >
+                        <m:Label text="Title" />
                         <template>
-                            <m:Text text="{tree>title}"/>
+                            <m:HBox alignItems="Center">
+                                <!-- Duplicate indicator dot -->
+                                <core:Icon
+                                    src="sap-icon://duplicate"
+                                    color="Warning"
+                                    size="0.875rem"
+                                    class="sapUiTinyMarginEnd"
+                                    visible="{tree>isDuplicate}"
+                                    tooltip="This is a duplicate incident"
+                                />
+                                <m:Link
+                                    text="{tree>title}"
+                                    press=".onTitleLinkPress"
+                                    wrapping="false"
+                                />
+                            </m:HBox>
                         </template>
                     </Column>
 
-                    <Column width="250px">
-                        <m:Label text="Description"/>
-                        <template>
-                            <m:Text text="{tree>description}"/>
-                        </template>
-                    </Column>
-
-                    <Column width="120px">
-                        <m:Label text="Priority"/>
+                    <!-- Priority -->
+                    <Column
+                        width="120px"
+                        sortProperty="priority"
+                        filterProperty="priority"
+                    >
+                        <m:Label text="Priority" />
                         <template>
                             <m:ObjectStatus
-                                text="{tree>priority}"/>
+                                text="{tree>priority}"
+                                state="{
+                                    path: 'tree>priority',
+                                    formatter: '.formatter.formatPriorityState'
+                                }"
+                            />
                         </template>
                     </Column>
 
-                    <Column width="120px">
-                        <m:Label text="Status"/>
+                    <!-- Status -->
+                    <Column
+                        width="130px"
+                        sortProperty="status"
+                        filterProperty="status"
+                    >
+                        <m:Label text="Status" />
                         <template>
                             <m:ObjectStatus
-                                text="{tree>status}"/>
+                                text="{tree>status}"
+                                state="{
+                                    path: 'tree>status',
+                                    formatter: '.formatter.formatStatusState'
+                                }"
+                                icon="{
+                                    path: 'tree>status',
+                                    formatter: '.formatter.formatStatusIcon'
+                                }"
+                            />
                         </template>
                     </Column>
 
-                    <Column width="120px">
-                        <m:Label text="Severity"/>
+                    <!-- Severity -->
+                    <Column
+                        width="110px"
+                        sortProperty="severity"
+                        filterProperty="severity"
+                    >
+                        <m:Label text="Severity" />
                         <template>
-                            <m:Text text="{tree>severity}"/>
+                            <m:ObjectStatus
+                                text="{tree>severity}"
+                                state="{
+                                    path: 'tree>severity',
+                                    formatter: '.formatter.formatSeverityState'
+                                }"
+                            />
                         </template>
                     </Column>
 
-                    <Column width="120px">
-                        <m:Label text="Affected Users"/>
+                    <!-- Affected Users -->
+                    <Column
+                        width="130px"
+                        sortProperty="affectedUsers"
+                        hAlign="Right"
+                    >
+                        <m:Label text="Affected Users" />
                         <template>
                             <m:ObjectNumber
-                                number="{tree>affectedUsers}"/>
+                                number="{tree>affectedUsers}"
+                                state="{
+                                    path: 'tree>affectedUsers',
+                                    formatter: '.formatter.formatAffectedUsersState'
+                                }"
+                            />
                         </template>
                     </Column>
 
-                    <Column width="150px">
-                        <m:Label text="Customer Impact"/>
+                    <!-- Customer Impact -->
+                    <Column
+                        width="150px"
+                        sortProperty="customerImpact"
+                        filterProperty="customerImpact"
+                    >
+                        <m:Label text="Customer Impact" />
                         <template>
                             <m:ObjectStatus
-                                text="{tree>customerImpact}"
-                                state="{= ${tree>customerImpact} ? 'Error' : 'Success' }"/>
+                                text="{= ${tree>customerImpact} ? 'Yes' : 'No' }"
+                                state="{= ${tree>customerImpact} ? 'Error' : 'Success' }"
+                                icon="{= ${tree>customerImpact} ? 'sap-icon://alert' : 'sap-icon://accept' }"
+                            />
                         </template>
                     </Column>
 
-                    <Column width="180px">
-                        <m:Label text="Created At"/>
+                    <!-- Description -->
+                    <Column
+                        width="250px"
+                        sortProperty="description"
+                        filterProperty="description"
+                    >
+                        <m:Label text="Description" />
                         <template>
-                            <m:Text text="{tree>createdAt}"/>
+                            <m:Text
+                                text="{tree>description}"
+                                wrapping="false"
+                                tooltip="{tree>description}"
+                            />
+                        </template>
+                    </Column>
+
+                    <!-- Created At -->
+                    <Column
+                        width="170px"
+                        sortProperty="createdAt"
+                    >
+                        <m:Label text="Created At" />
+                        <template>
+                            <m:Text text="{
+                                path: 'tree>createdAt',
+                                type: 'sap.ui.model.type.DateTime',
+                                formatOptions: { style: 'medium' }
+                            }" />
                         </template>
                     </Column>
 
                 </columns>
 
-            </TreeTable>
+                <!-- No data placeholder -->
+                <noData>
+                    <m:IllustratedMessage
+                        illustrationType="sapIllus-NoData"
+                        title="No Incidents Found"
+                        description="Try adjusting your search or filter criteria."
+                    />
+                </noData>
 
+            </TreeTable>
         </m:content>
 
     </m:Page>
-
 </mvc:View>

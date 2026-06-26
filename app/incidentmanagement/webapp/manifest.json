@@ -141,6 +141,13 @@
           ]
         },
         {
+          "name": "TreeTable",
+          "pattern": "treeTable",
+          "target": [
+            "TreeTable"
+          ]
+        },
+        {
           "name": "CreateIncident",
           "pattern": "createIncident",
           "target": "CreateIncident"
