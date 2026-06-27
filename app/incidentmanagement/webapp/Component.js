@@ -20,7 +20,7 @@ sap.ui.define([
             UIComponent.prototype.init.apply(this, arguments);
             //theme set
             Core.applyTheme(localStorage.getItem("sap-ui-theme")||"sap_horizon");
-               await this.loadCurrentUser()
+            await this.loadCurrentUser()
 
             // set the device model
             this.setModel(models.createDeviceModel(), "device");
@@ -33,7 +33,7 @@ sap.ui.define([
         async loadCurrentUser() {
 
             const oUserService =
-                this.getModel("adminService");
+                this.getModel();
 
             const oContext =
                 oUserService.bindContext(
@@ -45,7 +45,7 @@ sap.ui.define([
             const userData =
                 oContext.getBoundContext()
                     .getObject();
-
+                
             console.log(
                 "Current user data:",
                 userData

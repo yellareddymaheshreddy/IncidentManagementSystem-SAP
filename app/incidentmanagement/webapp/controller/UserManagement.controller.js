@@ -105,7 +105,7 @@ sap.ui.define([
                                 role: sRole,
                                 supportTeam_ID: sTeamId || null
                             });
-                            MessageToast.show("User added locally. Click 'Save Changes' to persist.");
+                            MessageToast.show("User added ");
                             oDialog.close();
                         } catch (error) {
                             MessageBox.error("Failed to add user: " + error.message);

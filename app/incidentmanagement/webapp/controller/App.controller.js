@@ -62,7 +62,7 @@ sap.ui.define([
                 const sRole = oEvent.getParameter("selectedItem").getKey();
                 const oUserModel = this.getOwnerComponent().getModel("user");
                 const sUsername = sRole === "Admin" ? "Admin" : "mahesh";
-                const sDbUserId = sRole === "Admin" ? "df3bb831-2be3-4695-8995-3f9d37f6d30c" : "df3bb831-2be3-4695-8995-3f9d37f6d30a";
+                const sDbUserId = sRole === "Admin" ? "4c1e5c79-9c07-4dfa-afc2-6d7546f8e1bd" : "0143a8de-05af-4002-a15a-0f4de35033db";
                 const bIsAdmin = sRole === "Admin";
 
                 oUserModel.setProperty("/role", sRole);

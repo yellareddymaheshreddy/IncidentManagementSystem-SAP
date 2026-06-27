@@ -25,6 +25,42 @@ sap.ui.define([
             } finally {
                 this.getView().setBusy(false);
             }
+        },
+        onAdd() {
+
+            const oBinding = this.byId("slaTable").getBinding("items");
+            oBinding.create({
+                priority: "",
+                description: "",
+                responseTime: 1,
+                resolutionTime: 1,
+                businessHoursOnly: true
+
+            });
+        },
+        async onDelete() {
+
+            const oTable = this.byId("slaTable");
+
+            const oItem = oTable.getSelectedItem();
+
+            if (!oItem) {
+                MessageToast.show("Select a row");
+                return;
+            }
+
+            try {
+
+                await oItem.getBindingContext("adminService").delete("slaUpdateGroup");
+
+                MessageToast.show("Deleted");
+
+            } catch (e) {
+
+                MessageBox.error(e.message);
+
+            }
+
         }
     });
 });

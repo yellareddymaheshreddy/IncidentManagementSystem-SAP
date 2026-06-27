@@ -84,16 +84,22 @@ srv.before("READ", "Incidents", req => {
     }
   });
 
-  srv.on("whoAmI", req => {
+ srv.on('whoAmI', (req) => {
 
-    console.log("User:", req.user.id);
+    // return user information from db
+        console.log("whoAmI called for user:", req.user);
+        return {
+            id: req.user.id,
+            userId: req.user.userId||req.user.id,
 
-    console.log("Roles:", [...req.user.roles]);
+            isAdmin:
+                req.user.is('Admin'),
 
-    return {
-        user: req.user.id
-    };
+            isEmployee:
+                req.user.is('Employee')
 
-});
+        };
+
+    });
 
 };

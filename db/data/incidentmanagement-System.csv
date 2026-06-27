@@ -1,4 +1,0 @@
-ID,systemId,name,description,owner_ID
-306272e9-3dec-4dd8-8e5b-7949445cddee,SYS001,SAP S4HANA,ERP Core System,df3bb831-2be3-4695-8995-3f9d37f6d30a
-64574184-c650-4ac7-8a77-9f7e12251bc6,SYS002,SAP CPI,Integration Platform,df3bb831-2be3-4695-8995-3f9d37f6d30b
-66dd6d9c-653d-4432-9b43-85228c72336d,SYS003,SuccessFactors,HR Management System,df3bb831-2be3-4695-8995-3f9d37f6d30c

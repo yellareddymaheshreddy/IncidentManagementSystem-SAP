@@ -119,7 +119,6 @@ module.exports = (srv) => {
     });
     srv.on('getIncidentStatusSummary', async (req) => {
         const tx = cds.tx(req);
-        const username = req.headers["x-mock-user"] || (req.user ? req.user.id : "admin");
         const whereClause = username !== "admin" ? "WHERE reportedBy_ID = 'df3bb831-2be3-4695-8995-3f9d37f6d30a'" : "";
 
         return await tx.run(`

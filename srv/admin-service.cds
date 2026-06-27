@@ -8,11 +8,5 @@ service AdminService {
     entity SLAConfigurations as projection on db.SLAConfiguration;
     entity SupportTeams as projection on db.SupportTeam;
     entity Users as projection on db.User;
-    function whoAmI() returns UserInfo;
 }
 
-type UserInfo {
-    userId   : String;
-    isAdmin  : Boolean;
-    isEmployee : Boolean;
-}

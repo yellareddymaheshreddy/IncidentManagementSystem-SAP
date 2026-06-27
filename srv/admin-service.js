@@ -44,7 +44,18 @@ module.exports = (srv) => {
 
   srv.before("CREATE", "Systems", async (req) => {
     req.data.systemId = await generateBusinessId(req, "SYSTEM_SEQ", "SYS");
-    console.log("Generated systemId:", req.data.systemId);
+  });
+
+  srv.before("CREATE", "Users", async (req) => {
+    req.data.userId = await generateBusinessId(req, "USER_SEQ", "USR");
+  });
+
+  srv.before("CREATE", "SupportTeams", async (req) => {
+    req.data.teamId = await generateBusinessId(req, "TEAM_SEQ", "TM");
+  });
+
+  srv.before("CREATE", "SLAConfigurations", async (req) => {
+    req.data.slaConfigId = await generateBusinessId(req, "SLA_SEQ", "SLA");
   });
 
   srv.before("UPDATE", "Incidents", async (req) => {
@@ -62,20 +73,5 @@ module.exports = (srv) => {
     }
   });
 
-  srv.on('whoAmI', (req) => {
-
-        return {
-
-            userId: req.user.id,
-
-            isAdmin:
-                req.user.is('Admin'),
-
-            isEmployee:
-                req.user.is('Employee')
-
-        };
-
-    });
 
 };

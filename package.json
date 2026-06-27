@@ -33,7 +33,13 @@
         "users": {
           "admin": {
             "password": "admin",
+            "id": "4c1e5c79-9c07-4dfa-afc2-6d7546f8e1bd",
             "roles": ["Admin"]
+          },
+          "user": {
+            "password": "user",
+            "id": "0143a8de-05af-4002-a15a-0f4de35033db",
+            "roles": ["User"]
           }
         }
         

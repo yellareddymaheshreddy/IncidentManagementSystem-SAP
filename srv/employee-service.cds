@@ -12,4 +12,12 @@ service EmployeeService {
     entity Systems as projection on db.System;
     @readonly
     entity IncidentAlerts as projection on db.IncidentAlerts;
+
+    function whoAmI() returns UserInfo;
+}
+
+type UserInfo {
+    userId   : String;
+    isAdmin  : Boolean;
+    isEmployee : Boolean;
 }

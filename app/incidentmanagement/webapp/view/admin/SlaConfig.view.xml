@@ -2,38 +2,91 @@
     controllerName="com.amista.incidentmanagement.incidentmanagement.controller.SlaConfig"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:f="sap.f">
+    xmlns:f="sap.f"
+>
     <Page title="SLA Configurations">
         <content>
             <VBox class="sapUiMediumMargin">
-                <Table id="slaTable" items="{
-                    path: 'adminService>/SLAConfigurations',
-                    parameters: {
-                        $$updateGroupId: 'slaUpdateGroup'
-                    }
-                }" growing="true">
+                <Table
+                    id="slaTable"
+                    mode="SingleSelectLeft"
+                    items="{
+        path:'adminService>/SLAConfigurations',
+        parameters:{
+            $$updateGroupId:'slaUpdateGroup'
+        }
+    }"
+                >
                     <headerToolbar>
                         <OverflowToolbar>
-                            <Title text="SLA Priority Profiles" level="H2"/>
-                            <ToolbarSpacer/>
-                            <Button text="Save Changes" type="Emphasized" icon="sap-icon://save" press=".onSaveChanges"/>
+                            <Title
+                                text="SLA Priority Profiles"
+                                level="H2"
+                            />
+
+                            <ToolbarSpacer />
+
+                            <Button
+                                text="Add"
+                                icon="sap-icon://add"
+                                type="Transparent"
+                                press=".onAdd"
+                            />
+
+                            <Button
+                                text="Delete"
+                                icon="sap-icon://delete"
+                                type="Negative"
+                                press=".onDelete"
+                            />
+
+                            <Button
+                                text="Save"
+                                icon="sap-icon://save"
+                                type="Emphasized"
+                                press=".onSaveChanges"
+                            />
                         </OverflowToolbar>
                     </headerToolbar>
                     <columns>
-                        <Column width="120px"><Text text="Priority"/></Column>
-                        <Column minScreenWidth="200px"><Text text="Description"/></Column>
-                        <Column width="180px"><Text text="Response Time (Hours)"/></Column>
-                        <Column width="180px"><Text text="Resolution Time (Hours)"/></Column>
-                        <Column width="150px" hAlign="Center"><Text text="Business Hours Only"/></Column>
+                        <Column width="120px">
+                            <Text text="Priority" />
+                        </Column>
+                        <Column minScreenWidth="200px">
+                            <Text text="Description" />
+                        </Column>
+                        <Column width="180px">
+                            <Text text="Response Time (Hours)" />
+                        </Column>
+                        <Column width="180px">
+                            <Text text="Resolution Time (Hours)" />
+                        </Column>
+                        <Column
+                            width="150px"
+                            hAlign="Center"
+                        >
+                            <Text text="Business Hours Only" />
+                        </Column>
                     </columns>
                     <items>
                         <ColumnListItem>
                             <cells>
-                                <Label text="{adminService>priority}" design="Bold"/>
-                                <Input value="{adminService>description}"/>
-                                <StepInput value="{adminService>responseTime}" min="1" step="1"/>
-                                <StepInput value="{adminService>resolutionTime}" min="1" step="1"/>
-                                <Switch state="{adminService>businessHoursOnly}"/>
+                                
+                                <Input value="{adminService>priority}" />
+                                <Input value="{adminService>description}" />
+                                <StepInput
+                                    value="{adminService>responseTime}"
+                                    min="1"
+                                    step="1"
+                                />
+                                <StepInput
+                                    value="{adminService>resolutionTime}"
+                                    min="1"
+                                    step="1"
+                                />
+                                <Switch
+                                    state="{adminService>businessHoursOnly}"
+                                />
                             </cells>
                         </ColumnListItem>
                     </items>
