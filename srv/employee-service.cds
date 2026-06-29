@@ -1,6 +1,6 @@
 using { incidentmanagement as db } from '../db/schema';
 
-@requires:'authenticated-user'
+// @requires:'authenticated-user'
 service EmployeeService {
     entity Incidents as projection on db.Incident; 
     entity IncidentComments as projection on db.IncidentComments;

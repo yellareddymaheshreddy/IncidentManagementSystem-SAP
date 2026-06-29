@@ -1,4 +1,4 @@
-@requires:'authenticated-user'
+//@requires:'authenticated-user'
 service DashboardService {
     function getDashboardKPIs()         returns DashboardKPIs;
     function getIncidentTrend()         returns many IncidentTrend;

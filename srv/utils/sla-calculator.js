@@ -50,7 +50,7 @@ function addBusinessHours(startDate, hoursToAdd) {
         if (hour < BUSINESS_HOURS_START) {
             current.setHours(BUSINESS_HOURS_START, 0, 0, 0);
         }
-        
+
         if (hour >= BUSINESS_HOURS_END) {
             current = moveToNextBusinessDay(current);
             continue;
@@ -80,15 +80,38 @@ function addBusinessHours(startDate, hoursToAdd) {
     return istToUTC(current);
 }
 
+function addHours(startDate, hoursToAdd) {
+
+    const result = new Date(startDate);
+
+    result.setTime(
+        result.getTime() + (hoursToAdd * 60 * 60 * 1000)
+    );
+
+    return result;
+
+}
+
 async function calculateSlaDue(priority) {
-        const slaConfig = await SELECT.one.from("incidentmanagement.SLAConfiguration").where({ priority: priority });
-        if (slaConfig) {
-            const now = new Date();
-            const responseDueAt = new Date(addBusinessHours(now, slaConfig.responseTime)); // Calculate response due date
-            const resolutionDueAt = new Date(addBusinessHours(now, slaConfig.resolutionTime)); // Calculate resolution due date
-            return { responseDueAt, resolutionDueAt };
+    const slaConfig = await SELECT.one.from("incidentmanagement.SLAConfiguration").where({ priority: priority });
+    if (slaConfig) {
+        const now = new Date();
+        let responseDueAt;
+        let resolutionDueAt;
+
+        if (slaConfig.businessHoursOnly) {
+            console.log("calculating business hours")
+            responseDueAt = new Date(addBusinessHours(now, slaConfig.responseTime)); // Calculate response due date
+            resolutionDueAt = new Date(addBusinessHours(now, slaConfig.resolutionTime)); // Calculate resolution due date
+        } else {
+            console.log("adding hours (no business hours specified)")
+            responseDueAt= new Date(addHours(now,slaConfig.responseTime))
+            resolutionDueAt = new Date(addHours(now,slaConfig.resolutionTime))
         }
-        return null;
+
+        return { responseDueAt, resolutionDueAt };
+    }
+    return null;
 }
 
 module.exports = {
