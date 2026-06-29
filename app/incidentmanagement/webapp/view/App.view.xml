@@ -30,14 +30,14 @@
 
                 <!-- Role Switcher for Demonstration -->
                 <Label
-                    text="View Role:"
+                    text="{= ${user>/isAdmin} ? 'Admin' : 'Employee'}"
                     design="Bold"
                     class="sapUiMediumMarginEnd"
                 />
                 <Select
                     id="roleSelect"
                     change=".onRoleChange"
-                    selectedKey="Employee"
+                    selectedKey="{= ${user>/isAdmin} ? 'Admin' : 'Employee'}"
                     width="180px"
                 >
                     <items>
@@ -47,7 +47,7 @@
                         />
                         <core:Item
                             key="Admin"
-                            text="Admin (Priya)"
+                            text="Admin (Mohan)"
                         />
                     </items>
                 </Select>

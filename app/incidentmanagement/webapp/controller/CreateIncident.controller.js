@@ -18,7 +18,7 @@ sap.ui.define([
                 try {
 
                     const oModel =
-                        this.getView().getModel();
+                        this.getView().getModel("adminService");
 
                     const oListBinding =
                         oModel.bindList("/Incidents");
@@ -60,8 +60,9 @@ sap.ui.define([
                                 this.getOwnerComponent().getModel("user").getProperty("/userId")
 
                         });
-
+                            console.log("before created")
                     await oContext.created();
+                    console.log("after created")
 
                     MessageToast.show(
                         "Incident Created Successfully"

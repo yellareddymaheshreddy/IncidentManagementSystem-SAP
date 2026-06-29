@@ -85,8 +85,6 @@ module.exports = (srv) => {
         const incidents = await tx.run(
             SELECT.from('incidentmanagement.Incident')
                 .where({
-                    // severity: 'Critical',
-                    priority: 'P2',
                     status: { '!=': 'Resolved' },
                     // alertSent: false TODO
                 })

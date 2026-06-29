@@ -25,7 +25,6 @@ sap.ui.define([
                 this.byId("themeSwitch").setState(true);
             }
         },
-
             onExit: function () {
                 if (this._iIntervalId) {
                     clearInterval(this._iIntervalId);

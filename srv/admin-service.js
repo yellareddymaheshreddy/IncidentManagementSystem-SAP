@@ -73,5 +73,21 @@ module.exports = (srv) => {
     }
   });
 
+  srv.on('whoAmI', (req) => {
+
+        return {
+
+            userId: req.user.id,
+
+            isAdmin:
+                req.user.is('Admin'),
+
+            isEmployee:
+                req.user.is('Employee')
+
+        };
+
+    });
+
 
 };

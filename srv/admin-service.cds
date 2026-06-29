@@ -1,6 +1,6 @@
 using {incidentmanagement as db} from '../db/schema';
 
-@(requires:'Admin')
+// @(requires:'Admin')
 service AdminService {
     entity Incidents as projection on db.Incident;
     entity IncidentComments as projection on db.IncidentComments;
@@ -8,5 +8,11 @@ service AdminService {
     entity SLAConfigurations as projection on db.SLAConfiguration;
     entity SupportTeams as projection on db.SupportTeam;
     entity Users as projection on db.User;
+    function whoAmI() returns UserInfo;
 }
 
+type UserInfo {
+    userId   : String;
+    isAdmin  : Boolean;
+    isEmployee : Boolean;
+}

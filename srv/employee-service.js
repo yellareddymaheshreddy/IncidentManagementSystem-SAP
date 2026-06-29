@@ -10,10 +10,13 @@ module.exports = (srv) => {
 
  
 srv.before("READ", "Incidents", req => {
+
+  console.log("=== READ INCIDENTS ===");
+  console.log("User:", req.user);
     let userId = req.user.id;
 
     if (userId === "anonymous") {
-        userId = "df3bb831-2be3-4695-8995-3f9d37f6d30a";
+        userId = "0143a8de-05af-4002-a15a-0f4de35033db"; // default user for testing
     }
 
     req.query.where({

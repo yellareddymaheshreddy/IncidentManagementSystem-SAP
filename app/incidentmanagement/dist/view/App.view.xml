@@ -41,7 +41,7 @@
                         />
                         <core:Item
                             key="Admin"
-                            text="Admin (Priya)"
+                            text="Admin (Mohan)"
                         />
                     </items>
                 </Select>

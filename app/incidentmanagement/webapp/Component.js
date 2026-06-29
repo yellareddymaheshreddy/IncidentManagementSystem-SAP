@@ -33,7 +33,7 @@ sap.ui.define([
         async loadCurrentUser() {
 
             const oUserService =
-                this.getModel();
+                this.getModel("adminService");
 
             const oContext =
                 oUserService.bindContext(
