@@ -2,6 +2,7 @@ _schema-version: 3.3.0
 ID: IncidentManagement
 description: A simple CAP project.
 version: 1.0.0
+
 modules:
 - name: IncidentManagement-srv
   type: nodejs
@@ -18,21 +19,17 @@ modules:
     instances: 1
   build-parameters:
     builder: npm-ci
+
 - name: IncidentManagement-destination-content
   type: com.sap.application.content
-
   requires:
-    - name: srv-api
-
     - name: IncidentManagement-destination-service
       parameters:
         content-target: true
-
     - name: IncidentManagement-repo-host
       parameters:
         service-key:
-          name: IncidentManagement-html5-repo-host-key
-
+          name: IncidentManagement-repo-host-key
     - name: incident-xsuaa
       parameters:
         service-key:
@@ -40,36 +37,28 @@ modules:
   parameters:
     content:
       instance:
-        existing_destinations_policy: update
-
         destinations:
-
-          - Name: IncidentManagement-srv
-            URL: ~{srv-api/srv-url}
-            Authentication: OAuth2UserTokenExchange
-            TokenServiceInstanceName: incident-xsuaa
-            TokenServiceKeyName: IncidentManagement-xsuaa-key
-            HTML5.ForwardAuthToken: true
-
           - Name: IncidentManagement-approuter_IncidentManagement_html_repo_host
             ServiceInstanceName: IncidentManagement-html5-service
-            ServiceKeyName: IncidentManagement-html5-repo-host-key
+            ServiceKeyName: IncidentManagement-repo-host-key
             sap.cloud.service: IncidentManagement
 
           - Name: IncidentManagement-approuter_uaa_IncidentManagement
             Authentication: OAuth2UserTokenExchange
-            ServiceInstanceName: incident-xsuaa
+            ServiceInstanceName: IncidentManagement-xsuaa-service
             ServiceKeyName: IncidentManagement-xsuaa-key
             sap.cloud.service: IncidentManagement
+        
+        existing_destinations_policy: ignore
   build-parameters:
     no-source: true
+
 - name: IncidentManagement-db-deployer
   type: hdb
   path: gen/db
   requires:
   - name: IncidentManagement-db
-  parameters:
-    buildpack: nodejs_buildpack
+
 - name: IncidentManagement-app-content
   type: com.sap.application.content
   path: .
@@ -77,6 +66,7 @@ modules:
   - name: IncidentManagement-repo-host
     parameters:
       content-target: true
+  - name: incident-xsuaa
   build-parameters:
     build-result: resources
     requires:
@@ -84,6 +74,7 @@ modules:
       - comamistaincidentmanagementincidentmanagement.zip
       name: comamistaincidentmanagementincidentmanagement
       target-path: resources/
+
 - name: comamistaincidentmanagementincidentmanagement
   type: html5
   path: app/incidentmanagement
@@ -94,18 +85,28 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+    
 resources:
 - name: incident-xsuaa
   type: org.cloudfoundry.managed-service
   parameters:
-    service: xsuaa
-    service-plan: application
+    config:
+      oauth2-configuration:
+        credential-types:
+          - binding-secret
+          - x509
+      tenant-mode: dedicated
     path: xs-security.json
+    service: xsuaa
+    service-name: IncidentManagement-xsuaa-service
+    service-plan: application
 - name: IncidentManagement-db
   type: com.sap.xs.hdi-container
   parameters:
     service: hana
     service-plan: hdi-shared
+  properties:
+    hdi-container-name: ${service-name}
 - name: IncidentManagement-repo-host
   type: org.cloudfoundry.managed-service
   parameters:
@@ -125,11 +126,26 @@ resources:
             ProxyType: Internet
             Type: HTTP
             URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            Name: ui5-lib
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
     service-name: IncidentManagement-destination-service
     service-plan: lite
+  requires:
+    - name: srv-api
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

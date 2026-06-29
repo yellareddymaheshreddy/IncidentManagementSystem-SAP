@@ -1,5 +1,5 @@
 {
-  "xsappname": "IncidentManagement",
+  "xsappname": "incidentmanagement-${org}-${space}",
   "tenant-mode": "dedicated",
   "description": "Security profile of called application",
   "scopes": [
