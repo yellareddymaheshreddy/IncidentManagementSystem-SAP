@@ -7,6 +7,10 @@ sap.ui.define([
 
     return Controller.extend("com.amista.incidentmanagement.incidentmanagement.controller.App", {
         onInit: function () {
+            const oLayoutModel = new JSONModel({
+                layout: "OneColumn"
+            });
+            this.getOwnerComponent().setModel(oLayoutModel, "layoutModel");
             // Setup global alerts count model
             const oAlertsCountModel = new JSONModel({
                 count: 0
@@ -16,6 +20,9 @@ sap.ui.define([
             // Attach listener to wait until models are propagated to the view
             this.getView().attachModelContextChange(this._onModelContextChange, this);
 
+            const oRouter = this.getOwnerComponent().getRouter();
+            oRouter.attachRouteMatched(this._onRouteMatched, this);
+
             // Refresh count every 30 seconds
             this._iIntervalId = setInterval(this._fetchAlertsCount.bind(this), 30000);
 
@@ -24,7 +31,32 @@ sap.ui.define([
             if(sTheme === "sap_horizon_dark") {
                 this.byId("themeSwitch").setState(true);
             }
+        },_onRouteMatched: function (oEvent) {
+            console.log("Route matched:", oEvent.getParameter("name"));
+            const sRouteName = oEvent.getParameter("name");
+            const oSideNavigation = this.byId("sideNavigation");
+            
+            // Adjust FCL layout based on route
+            const oLayoutModel = this.getOwnerComponent().getModel("layoutModel");
+            if (sRouteName === "IncidentDetail" || sRouteName === "CreateIncident"  || sRouteName === "Recomendations") {
+                oLayoutModel.setProperty("/layout", "TwoColumnsBeginExpanded");
+            } else {
+                oLayoutModel.setProperty("/layout", "OneColumn");
+            }
+
+            if (oSideNavigation && sRouteName) {
+                let sKey = sRouteName;
+                if (sRouteName === "EmployeeWorkspace") {
+                    sKey = "RouteHome";
+                } else if (sRouteName === "AdminWorkspace") {
+                    sKey = "Dashboard";
+                } else if (sRouteName === "IncidentDetail" || sRouteName === "UserDetail") {
+                    sKey = "RouteHome";
+                }
+                oSideNavigation.setSelectedKey(sKey);
+            }
         },
+
             onExit: function () {
                 if (this._iIntervalId) {
                     clearInterval(this._iIntervalId);

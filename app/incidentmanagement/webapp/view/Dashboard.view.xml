@@ -36,60 +36,68 @@
                 >
                     <!-- Total Incidents -->
                     <!-- Total Incidents -->
-    <GenericTile
-        header="Total Incidents"
-        subheader="Overall incidents"
-        class="sapUiTinyMargin">
-        <TileContent footer="Current Volume">
-            <NumericContent
-                value="{dashboard>/totalIncidents}"
-                valueColor="Neutral"
-                icon="sap-icon://activity-items"
-                withMargin="false"/>
-        </TileContent>
-    </GenericTile>
+                    <GenericTile
+                        header="Total Incidents"
+                        subheader="Overall incidents"
+                        class="sapUiTinyMargin"
+                    >
+                        <TileContent footer="Current Volume">
+                            <NumericContent
+                                value="{dashboard>/totalIncidents}"
+                                valueColor="Neutral"
+                                icon="sap-icon://activity-items"
+                                withMargin="false"
+                            />
+                        </TileContent>
+                    </GenericTile>
 
-    <!-- Open Incidents -->
-    <GenericTile
-        header="Open Incidents"
-        subheader="Needs Attention"
-        class="sapUiTinyMargin">
-        <TileContent footer="Requires Action">
-            <NumericContent
-                value="{dashboard>/openIncidents}"
-                valueColor="Critical"
-                icon="sap-icon://warning2"
-                withMargin="false"/>
-        </TileContent>
-    </GenericTile>
+                    <!-- Open Incidents -->
+                    <GenericTile
+                        header="Open Incidents"
+                        subheader="Needs Attention"
+                        class="sapUiTinyMargin"
+                    >
+                        <TileContent footer="Requires Action">
+                            <NumericContent
+                                value="{dashboard>/openIncidents}"
+                                valueColor="Critical"
+                                icon="sap-icon://warning2"
+                                withMargin="false"
+                            />
+                        </TileContent>
+                    </GenericTile>
 
-    <!-- Critical Incidents -->
-    <GenericTile
-        header="Critical Incidents"
-        subheader="Highest Priority"
-        class="sapUiTinyMargin">
-        <TileContent footer="Immediate Action">
-            <NumericContent
-                value="{dashboard>/criticalIncidents}"
-                valueColor="Error"
-                icon="sap-icon://alert"
-                withMargin="false"/>
-        </TileContent>
-    </GenericTile>
+                    <!-- Critical Incidents -->
+                    <GenericTile
+                        header="Critical Incidents"
+                        subheader="Highest Priority"
+                        class="sapUiTinyMargin"
+                    >
+                        <TileContent footer="Immediate Action">
+                            <NumericContent
+                                value="{dashboard>/criticalIncidents}"
+                                valueColor="Error"
+                                icon="sap-icon://alert"
+                                withMargin="false"
+                            />
+                        </TileContent>
+                    </GenericTile>
 
-    <!-- SLA Breaches -->
-    <GenericTile
-        header="SLA Breaches"
-        subheader="Compliance Status"
-        class="sapUiTinyMargin">
-        <TileContent footer="Past Due">
-            <NumericContent
-                value="{dashboard>/slaBreaches}"
-                valueColor="Error"
-                icon="sap-icon://lateness"
-                withMargin="false"/>
-        </TileContent>
-    </GenericTile>
+                    <!-- SLA Breaches -->
+                    <GenericTile
+                        header="SLA Breaches"
+                        subheader="Compliance Status"
+                        class="sapUiTinyMargin"
+                    >
+                        <TileContent footer="Past Due">
+                            <NumericContent
+                                value="{dashboard>/slaBreaches}"
+                                valueColor="Error"
+                                icon="sap-icon://lateness"
+                                withMargin="false"
+                            />
+                        </TileContent>
+                    </GenericTile>
                 </layout:Grid>
 
                 <layout:Grid

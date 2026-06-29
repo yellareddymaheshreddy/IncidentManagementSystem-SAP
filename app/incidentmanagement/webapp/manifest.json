@@ -122,9 +122,9 @@
     },
     "routing": {
       "config": {
-        "routerClass": "sap.m.routing.Router",
-        "controlAggregation": "pages",
-        "controlId": "app",
+        "routerClass": "sap.f.routing.Router",
+        "controlAggregation": "beginColumnPages",
+        "controlId": "fcl",
         "transition": "slide",
         "type": "View",
         "viewType": "XML",
@@ -150,12 +150,17 @@
         {
           "name": "CreateIncident",
           "pattern": "createIncident",
-          "target": "CreateIncident"
+          "target": ["TargetHome",
+            "CreateIncident"
+          ]
         },
         {
           "name": "IncidentDetail",
           "pattern": "incident/{incidentId}",
-          "target": "IncidentDetail"
+          "target": [
+            "TargetHome",
+            "IncidentDetail"
+          ]
         },
         {
           "name": "Dashboard",
@@ -198,6 +203,7 @@
           "name": "Recomendations",
           "pattern": "recomendations",
           "target": [
+            "Alerts",
             "Recomendations"
           ]
         }
@@ -209,11 +215,13 @@
         },
         "CreateIncident": {
           "id": "CreateIncident",
-          "name": "incidents.CreateIncident"
+          "name": "incidents.CreateIncident",
+          "controlAggregation": "midColumnPages"
         },
         "IncidentDetail": {
           "id": "IncidentDetail",
-          "name": "incidents.IncidentDetail"
+          "name": "incidents.IncidentDetail",
+          "controlAggregation": "midColumnPages"
         },
         "Dashboard": {
           "id": "Dashboard",
@@ -249,7 +257,8 @@
         },
         "Recomendations": {
           "id": "Recomendations",
-          "name": "admin.Recomendations"
+          "name": "admin.Recomendations",
+          "controlAggregation": "midColumnPages"
         }
       }
     },

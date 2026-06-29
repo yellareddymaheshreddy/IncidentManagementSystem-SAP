@@ -112,7 +112,7 @@ sap.ui.define([
             console.log("Navigating to details of incident ID:", sIncidentId);
 
             this.getOwnerComponent().getRouter().navTo("IncidentDetail", {
-                incidentId: sIncidentId
+                incidentId: sIncidentId,layout:"TwoColumnsMidExpanded"
             });
         },
 
