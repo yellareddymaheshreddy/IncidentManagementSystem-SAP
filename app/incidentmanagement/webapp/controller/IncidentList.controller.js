@@ -17,17 +17,11 @@ sap.ui.define([
             });
             this.getView().setModel(oViewModel, "view");
             this._bindTable();
-
-            //listen to role change and rebind the table accordingly
-            this.getOwnerComponent().getEventBus().subscribe("DefaultChannel", "RoleChanged", this.onRefresh, this);
         },
         onRefresh: function () {
             this._bindTable();
         },
         
-        onExit: function () {
-            this.getOwnerComponent().getEventBus().unsubscribe("DefaultChannel", "RoleChanged", this.onRefresh, this);
-        },
 
         _bindTable: function () {
 

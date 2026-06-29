@@ -163,6 +163,21 @@ srv.on("getChartData", async (req) => {
             .groupBy("status")
     );
 });
+
+
+srv.on("getOpenIncidents", async (req) => {
+    const Incident = cds.entities["incidentmanagement.Incident"];
+
+    const tx = cds.tx(req);
+
+    return await tx.run(
+        SELECT.from(Incident)
+           .where({
+                status: {
+                    in: ["Open", "New"]
+                }
+            })
+    );})
     
 
 };

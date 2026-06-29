@@ -40,7 +40,8 @@ sap.ui.define([
                             "reportedBy",
                             "assignedTo",
                             "comments($expand=user)",
-                            "masterIncident"
+                            "masterIncident",
+                            "system"
                         ].join(",")
                     }
                 });

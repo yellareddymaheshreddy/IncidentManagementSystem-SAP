@@ -17,13 +17,9 @@ sap.ui.define([
 
     return Controller.extend("com.amista.incidentmanagement.incidentmanagement.controller.UserManagement", {
         onInit: function () {
-            // Register for Role Changes to rebind table if role changes
-            this.getOwnerComponent().getEventBus().subscribe("DefaultChannel", "RoleChanged", this.onRoleChanged, this);
         },
 
-        onExit: function () {
-            this.getOwnerComponent().getEventBus().unsubscribe("DefaultChannel", "RoleChanged", this.onRoleChanged, this);
-        },
+
 
         onRoleChanged: function () {
             const oTable = this.byId("usersTable");

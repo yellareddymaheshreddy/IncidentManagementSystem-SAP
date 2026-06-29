@@ -1,7 +1,8 @@
 using { incidentmanagement as db } from '../db/schema';
 
+@requires:'authenticated-user'
 service EmployeeService {
-    entity Incidents as projection on db.Incident; // expose only nessary fields to employee :TODO  include only incidents reported by the employee
+    entity Incidents as projection on db.Incident; 
     entity IncidentComments as projection on db.IncidentComments;
     @readonly
     entity Users as projection on db.User;
@@ -12,5 +13,5 @@ service EmployeeService {
     entity Systems as projection on db.System;
     @readonly
     entity IncidentAlerts as projection on db.IncidentAlerts;
-
+    function whoAmI() returns String;
 }

@@ -57,26 +57,6 @@ sap.ui.define([
                 this.getOwnerComponent().getRouter().navTo("Alerts");
             },
 
-            onRoleChange: function (oEvent) {
-                const sRole = oEvent.getParameter("selectedItem").getKey();
-                const oUserModel = this.getOwnerComponent().getModel("user");
-                const sUsername = sRole === "Admin" ? "Admin" : "mahesh";
-                const sDbUserId = sRole === "Admin" ? "4c1e5c79-9c07-4dfa-afc2-6d7546f8e1bd" : "0143a8de-05af-4002-a15a-0f4de35033db";
-                const bIsAdmin = sRole === "Admin";
-
-                oUserModel.setProperty("/role", sRole);
-                oUserModel.setProperty("/username", sUsername);
-                oUserModel.setProperty("/userId", sDbUserId);
-                oUserModel.setProperty("/isAdmin", bIsAdmin);
-
-                // Publish event so active views can run initialization if needed
-                this.getOwnerComponent().getEventBus().publish("DefaultChannel", "RoleChanged", {
-                    role: sRole,
-                    username: sUsername,
-                    isAdmin: bIsAdmin
-                });
-            },
-
             _fetchAlertsCount: async function () {
                 const oModel = this.getOwnerComponent().getModel("dashboardService");
                 if (!oModel) return;

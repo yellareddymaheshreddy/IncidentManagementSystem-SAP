@@ -78,7 +78,7 @@
                         />
                         <Text text="{= ${incidentId} ? ${incidentId} : '—'}" />
                     </HBox>
-                    <HBox alignItems="Center">
+                    <HBox alignItems="Center" class="sapUiSmallMarginEnd">
                         <core:Icon
                             src="sap-icon://appointment-2"
                             class="sapUiTinyMarginEnd"
@@ -88,6 +88,18 @@
                             class="sapUiTinyMarginEnd"
                         />
                         <Text text="{= ${createdAt} ? ${createdAt} : '—'}" />
+                    </HBox>
+
+                    <HBox alignItems="Center">
+                        <core:Icon
+                            src="sap-icon://appointment-2"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <Label
+                            text="System:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <Text text="{system/name}" />
                     </HBox>
                 </HBox>
             </VBox>

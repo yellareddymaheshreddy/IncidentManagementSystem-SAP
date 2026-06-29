@@ -74,6 +74,7 @@ module.exports = (srv) => {
   });
 
   srv.on('whoAmI', (req) => {
+    console.log("whoAmI called for user:", req.user);
 
         return {
 

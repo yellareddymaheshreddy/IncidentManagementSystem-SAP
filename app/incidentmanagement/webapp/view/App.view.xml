@@ -34,23 +34,7 @@
                     design="Bold"
                     class="sapUiMediumMarginEnd"
                 />
-                <Select
-                    id="roleSelect"
-                    change=".onRoleChange"
-                    selectedKey="{= ${user>/isAdmin} ? 'Admin' : 'Employee'}"
-                    width="180px"
-                >
-                    <items>
-                        <core:Item
-                            key="Employee"
-                            text="Employee (Mahesh)"
-                        />
-                        <core:Item
-                            key="Admin"
-                            text="Admin (Mohan)"
-                        />
-                    </items>
-                </Select>
+                
                 <ToolbarSpacer width="15px" />
                 <Button
                     id="alertsBellButton"
@@ -58,6 +42,7 @@
                     type="Transparent"
                     press=".onAlertsIconPress"
                     tooltip="Active Outage Alerts"
+                    visible="{user>/isAdmin}"
                 >
                     <customData>
                         <BadgeCustomData
@@ -127,6 +112,13 @@
                         key="UserManagement"
                         visible="{user>/isAdmin}"
                     />
+                    <tnt:NavigationListItem
+                        text="Recommendations"
+                        icon="sap-icon://lightbulb"
+                        key="Recomendations"
+                        visible="{user>/isAdmin}"
+                    />
+
                 </tnt:NavigationList>
             </tnt:SideNavigation>
         </tnt:sideContent>

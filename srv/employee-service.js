@@ -8,21 +8,24 @@ const { generateBusinessId } = require("./utils/generateId.js");
 
 module.exports = (srv) => {
 
- 
-srv.before("READ", "Incidents", req => {
 
-  console.log("=== READ INCIDENTS ===");
-  console.log("User:", req.user);
+  srv.before("READ", "Incidents", req => {
+
+    console.log("=== READ INCIDENTS ===");
+    console.log("User:", req.user);
     let userId = req.user.id;
 
-    if (userId === "anonymous") {
-        userId = "0143a8de-05af-4002-a15a-0f4de35033db"; // default user for testing
-    }
 
-    req.query.where({
+    if (userId === "anonymous") {
+      userId = "0143a8de-05af-4002-a15a-0f4de35033db"; // default user for testing
+    }
+    const isAdmin = req.user.is("Admin");
+    if (!isAdmin) {
+      req.query.where({
         reportedBy_ID: userId
-    });
-});
+      });
+    }
+  });
 
   srv.before("CREATE", "Incidents", async (req) => {
     console.log("=== CREATE INCIDENT ===");
@@ -70,7 +73,7 @@ srv.before("READ", "Incidents", req => {
 
   srv.before("UPDATE", "Incidents", async (req) => {
     console.log(req.data)
-    if(req.data.assignedTo_ID && !req.data.status) {
+    if (req.data.assignedTo_ID && !req.data.status) {
       req.data.status = "Assigned";
     }
     const { status } = req.data;
@@ -87,22 +90,22 @@ srv.before("READ", "Incidents", req => {
     }
   });
 
- srv.on('whoAmI', (req) => {
+  srv.on('whoAmI', (req) => {
 
     // return user information from db
-        console.log("whoAmI called for user:", req.user);
-        return {
-            id: req.user.id,
-            userId: req.user.userId||req.user.id,
+    console.log("whoAmI called for user:", req.user);
+    return {
+      id: req.user.id,
+      userId: req.user.userId || req.user.id,
 
-            isAdmin:
-                req.user.is('Admin'),
+      isAdmin:
+        req.user.is('Admin'),
 
-            isEmployee:
-                req.user.is('Employee')
+      isEmployee:
+        req.user.is('Employee')
 
-        };
+    };
 
-    });
+  });
 
 };

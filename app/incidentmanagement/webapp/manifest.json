@@ -193,6 +193,13 @@
           "target": [
             "UserDetail"
           ]
+        },
+        {
+          "name": "Recomendations",
+          "pattern": "recomendations",
+          "target": [
+            "Recomendations"
+          ]
         }
       ],
       "targets": {
@@ -239,6 +246,10 @@
         "TreeTable": {
           "id": "TreeTable",
           "name": "TreeTable"
+        },
+        "Recomendations": {
+          "id": "Recomendations",
+          "name": "admin.Recomendations"
         }
       }
     },

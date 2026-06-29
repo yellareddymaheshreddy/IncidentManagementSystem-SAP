@@ -1,0 +1,100 @@
+<mvc:View
+    controllerName="com.amista.incidentmanagement.incidentmanagement.controller.Recommendations"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Assignment Recommendations">
+
+        <content>
+
+            <VBox class="sapUiMediumMarginTop sapUiMediumMarginBeginEnd">
+
+                <List
+                    items="{dashboardService>/getOpenIncidents()}"
+                    noDataText="No unassigned open incidents."
+                    >
+
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title
+                                text="Open Incidents Awaiting Assignment"
+                                level="H2"/>
+                            <ToolbarSpacer/>
+                            <Button
+                                icon="sap-icon://refresh"
+                                type="Transparent"
+                                press=".onRefresh"/>
+                        </OverflowToolbar>
+                    </headerToolbar>
+
+                    <items>
+
+                        <CustomListItem>
+
+                            <VBox class="sapUiMediumMargin">
+
+                                <Title
+                                    text="{dashboardService>title}"
+                                    level="H4"/>
+
+                                <Text
+                                    text="{dashboardService>description}"
+                                    wrapping="true"
+                                    class="sapUiTinyMarginTop"/>
+
+                                <HBox
+                                    justifyContent="SpaceAround"
+                                    class="sapUiMediumMarginTop">
+
+                                    <ObjectStatus
+                                        title="Status"
+                                        text="{dashboardService>status}"
+                                        state="Warning"/>
+
+                                    <ObjectStatus
+                                        title="Priority"
+                                        text="{dashboardService>priority}"
+                                        state="Error"/>
+
+                                    <ObjectStatus
+                                        title="Severity"
+                                        text="{dashboardService>severity}"
+                                        state="Information"/>
+
+                                </HBox>
+
+                                <MessageStrip
+                                    text="This incident is still open and has not been assigned. Assign an engineer to reduce SLA breach risk."
+                                    type="Warning"
+                                    showIcon="true"
+                                    class="sapUiMediumMarginTop"/>
+
+                                <HBox
+                                    justifyContent="End"
+                                    class="sapUiMediumMarginTop">
+
+                                    <Button
+                                        text="View/Assign Engineer"
+                                        icon="sap-icon://employee"
+                                        type="Emphasized"
+                                        class="sapUiSmallMarginBegin"
+                                        press=".onAssign"/>
+
+                                </HBox>
+
+                            </VBox>
+
+                        </CustomListItem>
+
+                    </items>
+
+                </List>
+
+            </VBox>
+
+        </content>
+
+    </Page>
+
+</mvc:View>
